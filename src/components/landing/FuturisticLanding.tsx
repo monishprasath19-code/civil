@@ -120,7 +120,10 @@ export default function FuturisticLanding() {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm">
+          <nav className="hidden md:flex items-center gap-6 text-sm">
+            <Link href="/interior-design" className="text-amber-400 hover:text-amber-300 font-medium transition-colors flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <Sparkles className="w-3.5 h-3.5" /> Interior AI Studio
+            </Link>
             <Link href="#architecture" className="text-slate-400 hover:text-sky-400 transition-colors">Architecture</Link>
             <Link href="#engine" className="text-slate-400 hover:text-sky-400 transition-colors">3D Engine</Link>
             <Link href="#costing" className="text-slate-400 hover:text-sky-400 transition-colors">Cost & BOQ</Link>
@@ -173,6 +176,13 @@ export default function FuturisticLanding() {
               >
                 <span>Start New Project</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link 
+                href="/interior-design" 
+                className="w-full sm:w-auto px-6 py-4 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:border-amber-500/50 rounded-xl font-semibold text-base transition-all flex items-center justify-center gap-2 shadow-lg shadow-amber-500/5"
+              >
+                <Sparkles className="w-5 h-5 text-amber-400" />
+                <span>AI Interior Studio</span>
               </Link>
               <Link 
                 href="/login" 

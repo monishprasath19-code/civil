@@ -2,6 +2,7 @@
 
 import { Room } from "@/models/project";
 import MaterialSurface from "../materials/MaterialSurface";
+import { Edges } from "@react-three/drei";
 
 export default function FloorMesh({ room, isSelected, onClick }: { room: Room; isSelected: boolean; onClick?: () => void }) {
   // room.position is the top-left corner in 2D
@@ -15,10 +16,11 @@ export default function FloorMesh({ room, isSelected, onClick }: { room: Room; i
       <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} onClick={(e) => { e.stopPropagation(); onClick?.(); }}>
         <planeGeometry args={[room.width, room.height]} />
         {isSelected ? (
-          <meshStandardMaterial color="#bae6fd" />
+          <meshStandardMaterial color="#bae6fd" roughness={0.4} />
         ) : (
           <MaterialSurface materialId={room.floorMaterialId} fallbackColor="#e2e8f0" />
         )}
+        {isSelected && <Edges color="#0284c7" threshold={15} />}
       </mesh>
     </group>
   );

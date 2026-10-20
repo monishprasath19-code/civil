@@ -4,6 +4,7 @@ import { Wall } from "@/models/project";
 import { getWallTransform } from "@/utils/geometry";
 import { useMemo } from "react";
 import MaterialSurface from "../materials/MaterialSurface";
+import { Edges } from "@react-three/drei";
 
 export default function WallMesh({ wall, isSelected, onClick }: { wall: Wall; isSelected: boolean; onClick?: () => void }) {
   const { length, position, rotation } = useMemo(() => getWallTransform(wall.startPoint, wall.endPoint), [wall]);
@@ -13,10 +14,14 @@ export default function WallMesh({ wall, isSelected, onClick }: { wall: Wall; is
       <mesh castShadow receiveShadow onClick={(e) => { e.stopPropagation(); onClick?.(); }}>
         <boxGeometry args={[length, wall.height, wall.thickness]} />
         {isSelected ? (
-          <meshStandardMaterial color="#bae6fd" />
+          <meshStandardMaterial color="#bae6fd" roughness={0.3} metalness={0.2} />
         ) : (
           <MaterialSurface materialId={wall.materialId} fallbackColor="#f8fafc" />
         )}
+        <Edges 
+          color={isSelected ? "#0284c7" : "#cbd5e1"} 
+          threshold={20} 
+        />
       </mesh>
     </group>
   );

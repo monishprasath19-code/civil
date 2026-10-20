@@ -1,6 +1,7 @@
 "use client";
 
 import { Door } from "@/models/project";
+import { Edges } from "@react-three/drei";
 
 export default function DoorMesh({ door, isSelected, onClick }: { door: Door; isSelected: boolean; onClick?: () => void }) {
   // rotation is in degrees from 2D planner (or 0 if not set)
@@ -9,9 +10,14 @@ export default function DoorMesh({ door, isSelected, onClick }: { door: Door; is
   
   return (
     <group position={[door.position.x, (door.height || 2.1) / 2, door.position.y]} rotation={[0, rotationY, 0]}>
-      <mesh onClick={(e) => { e.stopPropagation(); onClick?.(); }}>
-        <boxGeometry args={[door.width || 0.9, door.height || 2.1, 0.1]} />
-        <meshStandardMaterial color={isSelected ? "#bae6fd" : "#8b5a2b"} />
+      <mesh castShadow receiveShadow onClick={(e) => { e.stopPropagation(); onClick?.(); }}>
+        <boxGeometry args={[door.width || 0.9, door.height || 2.1, 0.08]} />
+        <meshStandardMaterial 
+          color={isSelected ? "#bae6fd" : "#78350f"} 
+          roughness={0.65} 
+          metalness={0.05} 
+        />
+        <Edges color={isSelected ? "#0284c7" : "#451a03"} threshold={20} />
       </mesh>
     </group>
   );

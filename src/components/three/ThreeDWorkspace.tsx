@@ -11,6 +11,7 @@ import FurnitureLibrary from "./FurnitureLibrary";
 import AIChatPanel from "@/components/planner/AIChatPanel";
 import { updateProjectAction } from "@/app/dashboard/actions";
 import { usePlannerStore } from "@/store/plannerStore";
+import ArchitecturalHUD, { RenderMode } from "./ArchitecturalHUD";
 
 // Dynamic import with ssr: false to prevent Three.js hydration mismatches
 const ThreeDScene = dynamic(() => import("./ThreeDScene"), { ssr: false });
@@ -23,9 +24,13 @@ export default function ThreeDWorkspace({ project }: { project: ProjectState }) 
   const [viewTarget, setViewTarget] = useState<'interior' | 'exterior' | 'full'>('interior');
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
+  const [renderMode, setRenderMode] = useState<RenderMode>('photoreal');
+  const [isDroneTour, setIsDroneTour] = useState(false);
+
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const floors = usePlannerStore(state => state.floors);
   const exterior = usePlannerStore(state => state.exterior);
+  const site = usePlannerStore(state => state.site);
   
   // We should also initialize the store if they load this directly
   const initProject = usePlannerStore(state => state.initProject);
@@ -63,6 +68,21 @@ export default function ThreeDWorkspace({ project }: { project: ProjectState }) 
       setTimeout(() => setSaveStatus("idle"), 2000);
     } catch (err) {
       setSaveStatus("error");
+    }
+  };
+
+  const handleCaptureSnapshot = () => {
+    try {
+      const canvas = document.querySelector("#civil-3d-canvas canvas") as HTMLCanvasElement || document.querySelector("canvas") as HTMLCanvasElement;
+      if (!canvas) return;
+      const dataUrl = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      const safeName = (project.name || "project").replace(/[^a-z0-9]/gi, "-").toLowerCase();
+      link.download = `${safeName}-3d-${renderMode}-${Date.now()}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (e) {
+      console.error("Snapshot error:", e);
     }
   };
 
@@ -207,6 +227,18 @@ export default function ThreeDWorkspace({ project }: { project: ProjectState }) 
           </div>
         )}
 
+        {/* Architectural Cyber HUD */}
+        <ArchitecturalHUD 
+          site={site}
+          exterior={exterior}
+          floors={floors}
+          renderMode={renderMode}
+          onRenderModeChange={setRenderMode}
+          isDroneTour={isDroneTour}
+          onToggleDroneTour={() => setIsDroneTour(!isDroneTour)}
+          onCaptureSnapshot={handleCaptureSnapshot}
+        />
+
         {/* 3D Canvas */}
         <ThreeDScene 
           floor={activeFloor} 
@@ -215,6 +247,8 @@ export default function ThreeDWorkspace({ project }: { project: ProjectState }) 
           viewTarget={viewTarget}
           selectedId={selectedId}
           onSelect={setSelectedId}
+          renderMode={renderMode}
+          isDroneTour={isDroneTour}
         />
         
         <ThreeDPropertiesPanel selectedId={selectedId} />

@@ -156,22 +156,23 @@ export default function AIChatPanel() {
               <div className="text-center p-6 text-slate-500 bg-white rounded-xl border border-slate-100 shadow-sm mt-4">
                 <Bot className="w-10 h-10 mx-auto mb-3 text-blue-300" />
                 <p className="text-sm mb-4">I can help you design, estimate, and evaluate scenarios. How can I assist you today?</p>
-                <div className="flex flex-wrap justify-center gap-2">
+                <div className="flex flex-wrap justify-center gap-1.5">
                   {[
                     "Change living room flooring to marble",
                     "Add a bed to the bedroom",
                     "Move the sofa near the window",
                     "How much will my project cost?",
-                    "Generate my BOQ"
+                    "Generate my BOQ",
+                    "Optimize living room for natural daylight",
+                    "Estimate embodied carbon footprint"
                   ].map(prompt => (
                     <button 
                       key={prompt}
                       onClick={() => {
                         setInput(prompt);
-                        // Using a small timeout to let React update the input state before firing handleSend
                         setTimeout(() => document.getElementById('ai-send-btn')?.click(), 50);
                       }}
-                      className="text-[11px] bg-slate-100 hover:bg-blue-50 text-slate-600 hover:text-blue-700 px-3 py-1.5 rounded-full transition-colors border border-slate-200"
+                      className="text-[10px] bg-slate-100 hover:bg-sky-50 text-slate-700 hover:text-sky-700 px-2.5 py-1.5 rounded-full transition-all border border-slate-200/80 hover:border-sky-300 font-medium"
                     >
                       {prompt}
                     </button>

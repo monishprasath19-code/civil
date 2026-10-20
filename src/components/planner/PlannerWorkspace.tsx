@@ -57,6 +57,11 @@ export default function PlannerWorkspace({ project }: { project: ProjectState })
 
   if (!activeFloorId) return <div className="flex-1 flex items-center justify-center bg-slate-100">Loading workspace...</div>;
 
+  const activeFloor = floors.find(f => f.id === activeFloorId);
+  const floorArea = activeFloor?.rooms.reduce((acc, r) => acc + (r.width * r.height), 0) || 0;
+  const wallCount = activeFloor?.walls.length || 0;
+  const roomCount = activeFloor?.rooms.length || 0;
+
   return (
     <div className="flex flex-col h-full bg-slate-50 w-full">
       <Topbar onSave={handleSave} saveStatus={saveStatus} projectName={project.name} />
@@ -68,6 +73,30 @@ export default function PlannerWorkspace({ project }: { project: ProjectState })
         <AIChatPanel />
         <ProfessionalToolsPanel projectId={project.id} />
         <MaterialComparisonPanel />
+      </div>
+
+      {/* Futuristic CAD Status HUD */}
+      <div className="h-7 bg-slate-900 border-t border-slate-800 flex items-center justify-between px-4 text-[11px] font-mono text-slate-400 select-none z-10 shrink-0">
+        <div className="flex items-center gap-4">
+          <span className="flex items-center gap-1.5 text-sky-400 font-semibold">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            CAD ENGINE ACTIVE
+          </span>
+          <span className="hidden sm:inline text-slate-500">|</span>
+          <span className="hidden sm:inline">SCALE: 1:50 METRIC</span>
+          <span className="hidden md:inline text-slate-500">|</span>
+          <span className="hidden md:inline">GRID SNAP: 0.5m</span>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <span className="text-slate-300">
+            FLOOR AREA: <strong className="text-sky-300 font-bold">{floorArea.toFixed(1)} m²</strong>
+          </span>
+          <span className="text-slate-500">|</span>
+          <span className="text-slate-300">
+            ROOMS: <strong className="text-white">{roomCount}</strong> • WALLS: <strong className="text-white">{wallCount}</strong>
+          </span>
+        </div>
       </div>
     </div>
   );

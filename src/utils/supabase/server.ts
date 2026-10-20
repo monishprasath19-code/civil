@@ -1,29 +1,25 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
+const DEFAULT_SUPABASE_URL = "https://kfezydsnhlvaldvnntux.supabase.co"
+const DEFAULT_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtmZXp5ZHNuaGx2YWxkdm5udHV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA5NjY0MjgsImV4cCI6MjEwNjU0MjQyOH0.qJxmXSfZWP72xzAh5f_wLzbYHpQf01rqHJApYQ2okEw"
+
 export async function createClient() {
   const cookieStore = await cookies()
 
   const supabaseUrl = (
     process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    process.env.SUPABASE_URL
+    process.env.SUPABASE_URL ||
+    DEFAULT_SUPABASE_URL
   )?.trim().replace(/^["']|["']$/g, '')
 
   const supabaseKey = (
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     process.env.SUPABASE_ANON_KEY ||
     process.env.SUPABASE_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_KEY
+    process.env.NEXT_PUBLIC_SUPABASE_KEY ||
+    DEFAULT_SUPABASE_ANON_KEY
   )?.trim().replace(/^["']|["']$/g, '')
-
-  if (!supabaseUrl || !supabaseKey) {
-    const missing: string[] = []
-    if (!supabaseUrl) missing.push('NEXT_PUBLIC_SUPABASE_URL (or SUPABASE_URL)')
-    if (!supabaseKey) missing.push('NEXT_PUBLIC_SUPABASE_ANON_KEY (or SUPABASE_ANON_KEY)')
-    throw new Error(
-      `Database connection error: Missing environment variable(s): ${missing.join(', ')}. In Vercel, go to Settings > Environment Variables, verify these names are spelled correctly, ensure the "Production" box is checked, and redeploy.`
-    )
-  }
 
   return createServerClient(
     supabaseUrl,

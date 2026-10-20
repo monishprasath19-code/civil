@@ -33,14 +33,14 @@ export default function ExteriorScene({
 
   return (
     <group>
-      {/* Plot Surface (Grass/Soil) */}
+      {/* Plot Surface (Realistic Turf Grass Lawn) */}
       <Plane 
         args={[plotWidth, plotLength]} 
         rotation={[-Math.PI / 2, 0, 0]} 
         position={[centerX, -0.01, centerZ]} 
         receiveShadow
       >
-        <meshStandardMaterial color="#4ade80" roughness={0.9} />
+        <MaterialSurface materialId="mat_landscape_lawn_grass" fallbackColor="#2d6a4f" category="landscape" />
       </Plane>
 
       {/* Road */}
@@ -60,19 +60,19 @@ export default function ExteriorScene({
         <group>
           {/* North Wall */}
           <Box args={[plotWidth, exterior.compoundWall.height, exterior.compoundWall.thickness]} position={[centerX, exterior.compoundWall.height/2, 0]} castShadow receiveShadow>
-            <MaterialSurface materialId={exterior.compoundWall.materialId} fallbackColor="#e2e8f0" />
+            <MaterialSurface materialId={exterior.compoundWall.materialId} fallbackColor="#e2e8f0" category="wall" />
           </Box>
           {/* South Wall */}
           <Box args={[plotWidth, exterior.compoundWall.height, exterior.compoundWall.thickness]} position={[centerX, exterior.compoundWall.height/2, plotLength]} castShadow receiveShadow>
-            <MaterialSurface materialId={exterior.compoundWall.materialId} fallbackColor="#e2e8f0" />
+            <MaterialSurface materialId={exterior.compoundWall.materialId} fallbackColor="#e2e8f0" category="wall" />
           </Box>
           {/* West Wall */}
           <Box args={[exterior.compoundWall.thickness, exterior.compoundWall.height, plotLength]} position={[0, exterior.compoundWall.height/2, centerZ]} castShadow receiveShadow>
-            <MaterialSurface materialId={exterior.compoundWall.materialId} fallbackColor="#e2e8f0" />
+            <MaterialSurface materialId={exterior.compoundWall.materialId} fallbackColor="#e2e8f0" category="wall" />
           </Box>
           {/* East Wall */}
           <Box args={[exterior.compoundWall.thickness, exterior.compoundWall.height, plotLength]} position={[plotWidth, exterior.compoundWall.height/2, centerZ]} castShadow receiveShadow>
-            <MaterialSurface materialId={exterior.compoundWall.materialId} fallbackColor="#e2e8f0" />
+            <MaterialSurface materialId={exterior.compoundWall.materialId} fallbackColor="#e2e8f0" category="wall" />
           </Box>
         </group>
       )}
@@ -97,7 +97,7 @@ export default function ExteriorScene({
           position={[exterior.driveway.position.x, 0.01, exterior.driveway.position.y]} 
           receiveShadow
         >
-          <MaterialSurface materialId={exterior.driveway.materialId} fallbackColor="#94a3b8" />
+          <MaterialSurface materialId={exterior.driveway.materialId} fallbackColor="#94a3b8" category="driveway" />
         </Plane>
       )}
 

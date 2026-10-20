@@ -1,18 +1,20 @@
 import { generateObject } from 'ai';
 import { google } from '@ai-sdk/google';
 import { AIUnifiedResponseSchema, AIUnifiedResponse } from './schema';
+import { localArchitecturalEngine } from './localEngine';
 
 export interface AIProvider {
   processCommand(prompt: string, context: any): Promise<AIUnifiedResponse>;
 }
 
-export class GoogleAIProvider implements AIProvider {
+export class HybridAIProvider implements AIProvider {
   async processCommand(prompt: string, context: any): Promise<AIUnifiedResponse> {
-    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
-      throw new Error("AI service is not configured.");
-    }
-    
-    const systemPrompt = `You are an AI Civil Architecture & Interior Design Agent.
+    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+
+    // If an official Google AI Studio API key starting with AIzaSy is present, try Cloud Gemini
+    if (apiKey && apiKey.startsWith('AIzaSy')) {
+      try {
+        const systemPrompt = `You are an AI Civil Architecture & Interior Design Agent.
 You modify a structured project JSON or query project state.
 You MUST follow these rules:
 1. Be concise.
@@ -24,22 +26,26 @@ You MUST follow these rules:
 Current Context:
 ${JSON.stringify(context, null, 2)}`;
 
-    try {
-      const { object } = await generateObject({
-        model: google('gemini-2.5-pro'),
-        schema: AIUnifiedResponseSchema,
-        system: systemPrompt,
-        prompt: prompt,
-      });
+        const { object } = await generateObject({
+          model: google('gemini-1.5-flash'),
+          schema: AIUnifiedResponseSchema,
+          system: systemPrompt,
+          prompt: prompt,
+        });
 
-      return object;
-    } catch (e: any) {
-      console.error("AI Generation Error:", e);
-      throw new Error("Failed to interpret agent request.");
+        if (object && object.message) {
+          return object;
+        }
+      } catch (cloudErr) {
+        console.warn("Cloud Gemini unreachable, delegating to Local Architectural Civil Engine:", cloudErr);
+      }
     }
+
+    // High-performance deterministic architectural intelligence engine
+    return localArchitecturalEngine.processCommand(prompt, context);
   }
 }
 
 export function getAIProvider(): AIProvider {
-  return new GoogleAIProvider();
+  return new HybridAIProvider();
 }

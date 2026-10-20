@@ -98,21 +98,28 @@ export default function ThreeDWorkspace({ project }: { project: ProjectState }) 
   }
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 w-full">
-      {/* Top Bar */}
-      <div className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 shrink-0 shadow-sm z-10">
+    <div className="flex flex-col h-full bg-zinc-950 w-full text-zinc-100 select-none">
+      {/* Cartier Atelier Luxury 3D Topbar */}
+      <div className="h-14 bg-zinc-950 border-b border-zinc-900 flex items-center justify-between px-5 shrink-0 shadow-xl z-20">
         <div className="flex items-center gap-4">
-          <Link href={`/dashboard/projects/${project.id}`} className="text-slate-500 hover:bg-slate-100 p-1.5 rounded transition-colors">
+          <Link href={`/dashboard/projects/${project.id}`} className="text-zinc-400 hover:text-amber-400 hover:bg-zinc-900 p-1.5 rounded-lg transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <span className="font-semibold text-slate-800 hidden sm:block">{project.name} - 3D View</span>
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-amber-400/90 font-medium block leading-none">
+              PBR Visualizer
+            </span>
+            <span className="font-serif font-medium text-sm text-white hidden sm:block mt-0.5">
+              {project.name}
+            </span>
+          </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <select 
             value={activeFloorId} 
             onChange={e => setActiveFloorId(e.target.value)}
-            className="text-sm border border-slate-300 rounded px-2 py-1 bg-slate-50 focus:outline-none focus:border-blue-500"
+            className="text-xs font-mono bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-amber-500/60"
             disabled={viewTarget === 'exterior'}
           >
             {project.floors.map(f => (
@@ -123,7 +130,7 @@ export default function ThreeDWorkspace({ project }: { project: ProjectState }) 
           <select
             value={viewTarget}
             onChange={(e) => setViewTarget(e.target.value as any)}
-            className="text-sm border border-slate-300 rounded px-2 py-1 bg-slate-50 font-medium text-slate-700 focus:outline-none focus:border-blue-500"
+            className="text-xs font-mono bg-zinc-900 border border-zinc-800 text-amber-300 rounded-lg px-2.5 py-1.5 font-medium focus:outline-none focus:border-amber-500/60"
           >
             <option value="interior">Interior View</option>
             <option value="exterior">Exterior View</option>
@@ -134,21 +141,21 @@ export default function ThreeDWorkspace({ project }: { project: ProjectState }) 
             <select
               value={exterior.timeOfDay}
               onChange={(e) => usePlannerStore.getState().updateExterior({ timeOfDay: e.target.value as any })}
-              className="text-sm border border-slate-300 rounded px-2 py-1 bg-slate-50 text-slate-700 focus:outline-none focus:border-blue-500 ml-2"
+              className="text-xs font-mono bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-amber-500/60"
             >
-              <option value="morning">Morning</option>
-              <option value="afternoon">Afternoon</option>
-              <option value="evening">Evening</option>
-              <option value="night">Night</option>
+              <option value="morning">Morning Dawn</option>
+              <option value="afternoon">Afternoon Sun</option>
+              <option value="evening">Golden Hour</option>
+              <option value="night">Midnight Blue</option>
             </select>
           )}
 
-          <label className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+          <label className="flex items-center gap-2 text-xs font-mono text-zinc-400 cursor-pointer px-2">
             <input 
               type="checkbox" 
               checked={showCeiling} 
               onChange={e => setShowCeiling(e.target.checked)} 
-              className="rounded text-blue-600 focus:ring-blue-500"
+              className="rounded accent-amber-500 focus:ring-amber-500 bg-zinc-900 border-zinc-800"
             />
             Ceiling
           </label>
@@ -156,55 +163,53 @@ export default function ThreeDWorkspace({ project }: { project: ProjectState }) 
           <button 
             onClick={handleSave} 
             disabled={saveStatus === "saving"}
-            className="ml-4 px-3 py-1.5 bg-blue-600 text-white rounded text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
+            className="ml-2 px-4 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 rounded-lg text-xs font-mono tracking-wider uppercase font-semibold shadow-md shadow-amber-500/10 transition-all disabled:opacity-50"
           >
-            {saveStatus === "saving" ? "Saving..." : saveStatus === "saved" ? "Saved!" : "Save Layout"}
+            {saveStatus === "saving" ? "Saving..." : saveStatus === "saved" ? "✓ Saved" : "Save Layout"}
           </button>
         </div>
       </div>
 
-      <div className="flex flex-1 relative">
+      <div className="flex flex-1 relative bg-zinc-950">
         {/* View Controls Overlay */}
-        <div className="absolute left-4 top-4 z-10 flex flex-col gap-2 bg-white/90 backdrop-blur shadow-sm p-2 rounded-lg border border-slate-200">
+        <div className="absolute left-4 top-4 z-10 flex flex-col gap-1.5 bg-zinc-950/90 backdrop-blur-md shadow-2xl p-1.5 rounded-xl border border-zinc-800/90">
           <button 
             onClick={() => setCameraMode('perspective')}
-            className={`p-2 rounded hover:bg-slate-100 transition-colors ${cameraMode === 'perspective' ? 'text-blue-600 bg-blue-50' : 'text-slate-600'}`}
+            className={`p-2 rounded-lg transition-colors ${cameraMode === 'perspective' ? 'text-zinc-950 bg-amber-400' : 'text-zinc-400 hover:text-amber-400 hover:bg-zinc-900'}`}
             title="Perspective View"
           >
-            <Rotate3D className="w-5 h-5" />
+            <Rotate3D className="w-4 h-4" />
           </button>
           <button 
             onClick={() => setCameraMode('top')}
-            className={`p-2 rounded hover:bg-slate-100 transition-colors ${cameraMode === 'top' ? 'text-blue-600 bg-blue-50' : 'text-slate-600'}`}
-            title="Top View"
+            className={`p-2 rounded-lg transition-colors ${cameraMode === 'top' ? 'text-zinc-950 bg-amber-400' : 'text-zinc-400 hover:text-amber-400 hover:bg-zinc-900'}`}
+            title="Top CAD View"
           >
-            <AlignVerticalSpaceAround className="w-5 h-5" />
+            <AlignVerticalSpaceAround className="w-4 h-4" />
           </button>
           <button 
             onClick={() => setCameraMode('front')}
-            className={`p-2 rounded hover:bg-slate-100 transition-colors ${cameraMode === 'front' ? 'text-blue-600 bg-blue-50' : 'text-slate-600'}`}
-            title="Front View"
+            className={`p-2 rounded-lg transition-colors ${cameraMode === 'front' ? 'text-zinc-950 bg-amber-400' : 'text-zinc-400 hover:text-amber-400 hover:bg-zinc-900'}`}
+            title="Elevation View"
           >
-            <AlignHorizontalSpaceAround className="w-5 h-5" />
+            <AlignHorizontalSpaceAround className="w-4 h-4" />
           </button>
           <button 
             onClick={() => setCameraMode('walkthrough')}
-            className={`p-2 rounded hover:bg-slate-100 transition-colors ${cameraMode === 'walkthrough' ? 'text-blue-600 bg-blue-50' : 'text-slate-600'}`}
-            title="Walkthrough Mode"
+            className={`p-2 rounded-lg transition-colors ${cameraMode === 'walkthrough' ? 'text-zinc-950 bg-amber-400' : 'text-zinc-400 hover:text-amber-400 hover:bg-zinc-900'}`}
+            title="Interactive First-Person Walkthrough"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 4v16"/><path d="M17 4v16"/><path d="M19 8H5"/><path d="M19 16H5"/><path d="M9 4v16"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 4v16"/><path d="M17 4v16"/><path d="M19 8H5"/><path d="M19 16H5"/><path d="M9 4v16"/></svg>
           </button>
           <button 
             onClick={() => {
-              // Hacky way to reset by remounting the camera or forcing a re-render of orbit controls
-              // For a true reset, we'd use a ref to OrbitControls, but this forces a quick toggle
               setCameraMode(prev => prev === 'perspective' ? 'top' : 'perspective');
               setTimeout(() => setCameraMode('perspective'), 10);
             }}
-            className="p-2 rounded hover:bg-slate-100 transition-colors text-slate-600 mt-2 border-t border-slate-200"
-            title="Reset Camera"
+            className="p-2 rounded-lg hover:bg-zinc-900 transition-colors text-zinc-400 hover:text-amber-400 mt-1 border-t border-zinc-800/80"
+            title="Reset Viewport Frame"
           >
-            <Maximize className="w-5 h-5" />
+            <Maximize className="w-4 h-4" />
           </button>
         </div>
 

@@ -2,7 +2,7 @@
 
 import { Furniture } from "@/models/project";
 import { FurnitureRegistry } from "./furniture/Registry";
-import { ProceduralSofa, ProceduralBed, ProceduralTable, ProceduralGenericBox } from "./furniture/ProceduralModels";
+import { ProceduralSofa, ProceduralBed, ProceduralTable, ProceduralGenericBox, ProceduralTVUnit, ProceduralPlant } from "./furniture/ProceduralModels";
 import { TransformControls } from "@react-three/drei";
 import GlbModel from "./furniture/GlbModel";
 import { usePlannerStore } from "@/store/plannerStore";
@@ -55,7 +55,9 @@ export default function FurnitureMesh({ furniture, isSelected, onClick }: { furn
     
     if (type.includes('sofa') || name.includes('sofa')) return <ProceduralSofa width={w} height={h} depth={d} materialId={matId} />;
     if (type.includes('bed') || name.includes('bed')) return <ProceduralBed width={w} height={h} depth={d} materialId={matId} />;
-    if (type.includes('table') || name.includes('table')) return <ProceduralTable width={w} height={h} depth={d} materialId={matId} />;
+    if (type.includes('tv') || name.includes('tv') || name.includes('console')) return <ProceduralTVUnit width={w} height={h} depth={d} />;
+    if (type.includes('plant') || name.includes('plant') || name.includes('tree')) return <ProceduralPlant />;
+    if (type.includes('table') || name.includes('table') || type.includes('desk') || name.includes('desk')) return <ProceduralTable width={w} height={h} depth={d} materialId={matId} />;
     
     return <ProceduralGenericBox width={w} height={h} depth={d} materialId={matId} />;
   };

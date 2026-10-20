@@ -41,7 +41,7 @@ export default function AIAssistantStudioPage() {
       });
 
       const data = await res.json();
-      const reply = data.explanation || data.reply || "I have analyzed your query according to standard civil architectural guidelines. Let me know if you would like to apply this to a specific floor plan.";
+      const reply = data.message || data.explanation || data.reply || "I have analyzed your query according to standard civil architectural guidelines. Let me know if you would like to apply this to a specific floor plan.";
       
       setMessages(prev => [...prev, {
         role: 'assistant',

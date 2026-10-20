@@ -5,22 +5,23 @@ import MaterialSurface from "../materials/MaterialSurface";
 import { Edges } from "@react-three/drei";
 
 export default function FloorMesh({ room, isSelected, onClick }: { room: Room; isSelected: boolean; onClick?: () => void }) {
-  // room.position is the top-left corner in 2D
-  // BoxGeometry origin is its center.
-  // So position needs to be center of the room.
   const centerX = room.position.x + room.width / 2;
-  const centerZ = room.position.y + room.height / 2; // y in 2D is Z in 3D
+  const centerZ = room.position.y + room.height / 2;
   
   return (
     <group position={[centerX, 0.01, centerZ]}>
       <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} onClick={(e) => { e.stopPropagation(); onClick?.(); }}>
         <planeGeometry args={[room.width, room.height]} />
         {isSelected ? (
-          <meshStandardMaterial color="#bae6fd" roughness={0.4} />
+          <meshStandardMaterial color="#bae6fd" roughness={0.3} />
         ) : (
-          <MaterialSurface materialId={room.floorMaterialId} fallbackColor="#e2e8f0" />
+          <MaterialSurface 
+            materialId={room.floorMaterialId || 'mat_floor_white_marble'} 
+            fallbackColor="#f8fafc" 
+            category="floor" 
+          />
         )}
-        {isSelected && <Edges color="#0284c7" threshold={15} />}
+        {isSelected && <Edges color="#f59e0b" threshold={15} />}
       </mesh>
     </group>
   );

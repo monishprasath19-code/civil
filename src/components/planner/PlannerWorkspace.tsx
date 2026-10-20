@@ -63,10 +63,10 @@ export default function PlannerWorkspace({ project }: { project: ProjectState })
   const roomCount = activeFloor?.rooms.length || 0;
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 w-full">
+    <div className="flex flex-col h-full bg-zinc-950 w-full text-zinc-100 select-none">
       <Topbar onSave={handleSave} saveStatus={saveStatus} projectName={project.name} />
       
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className="flex flex-1 overflow-hidden relative bg-zinc-950">
         <LeftToolbar />
         <CanvasArea />
         <PropertiesPanel />
@@ -75,26 +75,26 @@ export default function PlannerWorkspace({ project }: { project: ProjectState })
         <MaterialComparisonPanel />
       </div>
 
-      {/* Futuristic CAD Status HUD */}
-      <div className="h-7 bg-slate-900 border-t border-slate-800 flex items-center justify-between px-4 text-[11px] font-mono text-slate-400 select-none z-10 shrink-0">
+      {/* Cartier Atelier CAD Status HUD */}
+      <div className="h-7 bg-zinc-950 border-t border-zinc-900 flex items-center justify-between px-5 text-[11px] font-mono text-zinc-400 select-none z-10 shrink-0">
         <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1.5 text-sky-400 font-semibold">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            CAD ENGINE ACTIVE
+          <span className="flex items-center gap-1.5 text-amber-400 font-semibold tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            2D CAD ENGINE ACTIVE
           </span>
-          <span className="hidden sm:inline text-slate-500">|</span>
-          <span className="hidden sm:inline">SCALE: 1:50 METRIC</span>
-          <span className="hidden md:inline text-slate-500">|</span>
-          <span className="hidden md:inline">GRID SNAP: 0.5m</span>
+          <span className="hidden sm:inline text-zinc-700">|</span>
+          <span className="hidden sm:inline text-zinc-400">SCALE: 1:50 METRIC</span>
+          <span className="hidden md:inline text-zinc-700">|</span>
+          <span className="hidden md:inline text-zinc-400">SNAP: 0.25m</span>
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-slate-300">
-            FLOOR AREA: <strong className="text-sky-300 font-bold">{floorArea.toFixed(1)} m²</strong>
+          <span className="text-zinc-400">
+            FLOOR AREA: <strong className="text-amber-300 font-bold font-mono">{floorArea.toFixed(1)} m²</strong>
           </span>
-          <span className="text-slate-500">|</span>
-          <span className="text-slate-300">
-            ROOMS: <strong className="text-white">{roomCount}</strong> • WALLS: <strong className="text-white">{wallCount}</strong>
+          <span className="text-zinc-700">|</span>
+          <span className="text-zinc-400">
+            ROOMS: <strong className="text-white font-mono">{roomCount}</strong> • WALLS: <strong className="text-white font-mono">{wallCount}</strong>
           </span>
         </div>
       </div>

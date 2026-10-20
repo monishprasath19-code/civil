@@ -150,7 +150,23 @@ export default function ThreeDScene({
           return (
             <group key={f.id} position={[0, f.elevation, 0]}>
               {f.rooms.map(room => (
-                <FloorMesh key={room.id} room={room} isSelected={selectedId === room.id} onClick={() => onSelect(room.id)} />
+                <group key={room.id}>
+                  <FloorMesh room={room} isSelected={selectedId === room.id} onClick={() => onSelect(room.id)} />
+                  {/* Warm Interior Architectural Downlight for Ultra-Realism */}
+                  <group position={[room.position.x + room.width / 2, 2.7, room.position.y + room.height / 2]}>
+                    <mesh rotation={[Math.PI / 2, 0, 0]}>
+                      <ringGeometry args={[0.08, 0.12, 16]} />
+                      <meshStandardMaterial color="#f8fafc" roughness={0.3} metalness={0.7} />
+                    </mesh>
+                    <pointLight 
+                      intensity={1.2} 
+                      distance={8} 
+                      decay={1.8} 
+                      color="#fff4e6" 
+                      castShadow={false}
+                    />
+                  </group>
+                </group>
               ))}
               {f.walls.map(wall => (
                 <WallMesh key={wall.id} wall={wall} isSelected={selectedId === wall.id} onClick={() => onSelect(wall.id)} />

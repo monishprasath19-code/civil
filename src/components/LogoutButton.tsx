@@ -11,10 +11,10 @@ export default function LogoutButton() {
     <button 
       onClick={() => startTransition(() => logout())}
       disabled={isPending}
-      className="p-2 text-slate-400 hover:text-red-600 rounded-full hover:bg-red-50 transition-colors"
-      title="Logout"
+      className="p-2 text-zinc-400 hover:text-rose-400 rounded-full hover:bg-zinc-900 transition-colors disabled:opacity-50"
+      title="Exit Atelier"
     >
-      <LogOut className="w-5 h-5" />
+      <LogOut className="w-4 h-4" />
     </button>
   );
 }

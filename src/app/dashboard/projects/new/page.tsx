@@ -2,14 +2,14 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Check, ChevronRight, ChevronLeft, Loader2 } from "lucide-react";
+import { Check, ChevronRight, ChevronLeft, Loader2, Sparkles, Compass } from "lucide-react";
 import { createProjectAction } from "@/app/dashboard/actions";
 import { SiteInfo, Budget, Requirements } from "@/models/project";
 
 const steps = [
-  { id: 'site', name: 'Site Information' },
-  { id: 'budget', name: 'Budget' },
-  { id: 'requirements', name: 'Requirements' },
+  { id: 'site', name: 'Site Geometry' },
+  { id: 'budget', name: 'Budget Capital' },
+  { id: 'requirements', name: 'Spatial Program' },
 ];
 
 export default function NewProjectWizard() {
@@ -23,7 +23,7 @@ export default function NewProjectWizard() {
   const [location, setLocation] = useState("");
   const [plotLength, setPlotLength] = useState("");
   const [plotWidth, setPlotWidth] = useState("");
-  const [unit, setUnit] = useState<"feet" | "meters">("feet");
+  const [unit, setUnit] = useState<"feet" | "meters">("meters");
   const [roadDirection, setRoadDirection] = useState<"N" | "S" | "E" | "W">("N");
   const [floors, setFloors] = useState("1");
 
@@ -33,7 +33,7 @@ export default function NewProjectWizard() {
   const [interiorBudget, setInteriorBudget] = useState("");
 
   // Requirements
-  const [bhkType, setBhkType] = useState<"1BHK" | "2BHK" | "3BHK" | "4BHK" | "Custom">("2BHK");
+  const [bhkType, setBhkType] = useState<"1BHK" | "2BHK" | "3BHK" | "4BHK" | "Custom">("3BHK");
   
   const handleNext = () => {
     setError(null);
@@ -41,7 +41,7 @@ export default function NewProjectWizard() {
       setCurrentStep(prev => prev + 1);
     } else {
       if (!projectName) {
-        setError("Project name is required.");
+        setError("Project commission name is required.");
         return;
       }
       const plotArea = (parseFloat(plotLength) || 0) * (parseFloat(plotWidth) || 0);
@@ -97,36 +97,52 @@ export default function NewProjectWizard() {
   const plotArea = (parseFloat(plotLength) || 0) * (parseFloat(plotWidth) || 0);
 
   return (
-    <div className="max-w-3xl mx-auto py-8">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-slate-900 mb-2">Create New Project</h2>
-        <p className="text-slate-500 text-sm">Enter the initial details to setup your workspace.</p>
+    <div className="max-w-3xl mx-auto py-6 space-y-8">
+      {/* Header */}
+      <div>
+        <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-amber-400/90 font-medium flex items-center gap-2">
+          <Compass className="w-3.5 h-3.5 text-amber-400" />
+          Atelier Commissioning Intake
+        </span>
+        <h1 className="text-3xl font-serif tracking-tight text-white mt-1">
+          Commission Architectural Project
+        </h1>
+        <p className="text-sm text-zinc-400 font-light mt-1">
+          Establish the foundational site dimensions, financial capital boundaries, and spatial typology.
+        </p>
       </div>
 
-      {/* Progress */}
+      {/* Progress Steps */}
       <nav aria-label="Progress">
         <ol role="list" className="flex items-center">
           {steps.map((step, stepIdx) => (
-            <li key={step.name} className={`relative ${stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : ''}`}>
+            <li key={step.name} className={`relative ${stepIdx !== steps.length - 1 ? 'pr-12 sm:pr-24' : ''}`}>
               <div className="flex items-center">
                 <div 
-                  className={`relative flex h-8 w-8 items-center justify-center rounded-full ${
-                    stepIdx < currentStep ? 'bg-blue-600' : stepIdx === currentStep ? 'border-2 border-blue-600 bg-white' : 'border-2 border-slate-300 bg-white'
+                  className={`relative flex h-8 w-8 items-center justify-center rounded-xl text-xs font-mono transition-all ${
+                    stepIdx < currentStep 
+                      ? 'bg-amber-500 text-zinc-950 font-bold shadow-lg shadow-amber-500/20' 
+                      : stepIdx === currentStep 
+                        ? 'border border-amber-400 bg-amber-500/10 text-amber-300 font-bold' 
+                        : 'border border-zinc-800 bg-zinc-900 text-zinc-500'
                   }`}
                 >
                   {stepIdx < currentStep ? (
-                    <Check className="h-5 w-5 text-white" aria-hidden="true" />
+                    <Check className="h-4 w-4 stroke-[3]" aria-hidden="true" />
                   ) : (
-                    <span className={stepIdx === currentStep ? 'text-blue-600' : 'text-slate-500'}>
-                      {stepIdx + 1}
-                    </span>
+                    <span>{stepIdx + 1}</span>
                   )}
                 </div>
                 {stepIdx !== steps.length - 1 && (
-                  <div className={`absolute top-4 w-full h-0.5 ${stepIdx < currentStep ? 'bg-blue-600' : 'bg-slate-300'}`} style={{ left: '2rem', right: '-2rem' }} />
+                  <div 
+                    className={`absolute top-4 w-full h-[2px] ${stepIdx < currentStep ? 'bg-amber-500/80' : 'bg-zinc-800'}`} 
+                    style={{ left: '2.5rem', right: '-2.5rem' }} 
+                  />
                 )}
               </div>
-              <span className={`absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs font-medium ${stepIdx <= currentStep ? 'text-blue-600' : 'text-slate-500'}`}>
+              <span className={`absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-widest whitespace-nowrap ${
+                stepIdx <= currentStep ? 'text-amber-400' : 'text-zinc-600'
+              }`}>
                 {step.name}
               </span>
             </li>
@@ -134,60 +150,101 @@ export default function NewProjectWizard() {
         </ol>
       </nav>
 
-      <div className="mt-12 bg-white shadow-sm rounded-xl border border-slate-200 p-6 sm:p-8">
+      {/* Form Container */}
+      <div className="mt-10 bg-zinc-900/60 backdrop-blur-sm rounded-2xl border border-zinc-800/80 p-6 sm:p-8 shadow-2xl">
         
-        {/* Step 1: Site */}
+        {/* Step 1: Site Geometry */}
         {currentStep === 0 && (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div className="sm:col-span-2">
-                <label className="block text-sm font-medium text-slate-700">Project Name</label>
-                <input type="text" value={projectName} onChange={e => setProjectName(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="e.g. Dream Villa" />
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Project Title</label>
+                <input 
+                  type="text" 
+                  value={projectName} 
+                  onChange={e => setProjectName(e.target.value)} 
+                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors" 
+                  placeholder="e.g. Maison de Verre / Obsidian Villa" 
+                />
               </div>
               
               <div className="sm:col-span-2">
-                <label className="block text-sm font-medium text-slate-700">Location</label>
-                <input type="text" value={location} onChange={e => setLocation(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="City, State" />
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Geographic Location</label>
+                <input 
+                  type="text" 
+                  value={location} 
+                  onChange={e => setLocation(e.target.value)} 
+                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors" 
+                  placeholder="e.g. Mumbai, Maharashtra" 
+                />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700">Plot Length</label>
-                <input type="number" min="0" value={plotLength} onChange={e => setPlotLength(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Plot Length</label>
+                <input 
+                  type="number" 
+                  min="0" 
+                  value={plotLength} 
+                  onChange={e => setPlotLength(e.target.value)} 
+                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-amber-500/60 transition-colors" 
+                  placeholder="15"
+                />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700">Plot Width</label>
-                <input type="number" min="0" value={plotWidth} onChange={e => setPlotWidth(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Plot Width</label>
+                <input 
+                  type="number" 
+                  min="0" 
+                  value={plotWidth} 
+                  onChange={e => setPlotWidth(e.target.value)} 
+                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-amber-500/60 transition-colors" 
+                  placeholder="12"
+                />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700">Measurement Unit</label>
-                <select value={unit} onChange={e => setUnit(e.target.value as "feet" | "meters")} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                  <option value="feet">Feet</option>
-                  <option value="meters">Meters</option>
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Measurement Standard</label>
+                <select 
+                  value={unit} 
+                  onChange={e => setUnit(e.target.value as "feet" | "meters")} 
+                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-amber-500/60 transition-colors"
+                >
+                  <option value="meters">Meters (SI International)</option>
+                  <option value="feet">Feet (Imperial Standard)</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700">Calculated Area</label>
-                <div className="mt-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm text-slate-600">
-                  {plotArea > 0 ? `${plotArea} sq ${unit}` : "0"}
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Computed Plot Surface</label>
+                <div className="px-3.5 py-2.5 bg-zinc-950/40 border border-zinc-800/60 rounded-lg text-sm font-mono text-amber-400">
+                  {plotArea > 0 ? `${plotArea.toFixed(1)} sq.${unit}` : "0.0"}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700">Road Direction</label>
-                <select value={roadDirection} onChange={e => setRoadDirection(e.target.value as "N" | "S" | "E" | "W")} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                  <option value="N">North</option>
-                  <option value="E">East</option>
-                  <option value="W">West</option>
-                  <option value="S">South</option>
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Approach Road Cardinal</label>
+                <select 
+                  value={roadDirection} 
+                  onChange={e => setRoadDirection(e.target.value as "N" | "S" | "E" | "W")} 
+                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-amber-500/60 transition-colors"
+                >
+                  <option value="N">North (Ideal for diffuse lighting)</option>
+                  <option value="E">East (Morning sun orientation)</option>
+                  <option value="W">West (Sunset orientation)</option>
+                  <option value="S">South (Maximum solar exposure)</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700">Number of Floors</label>
-                <input type="number" min="1" value={floors} onChange={e => setFloors(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Storey Levels</label>
+                <input 
+                  type="number" 
+                  min="1" 
+                  value={floors} 
+                  onChange={e => setFloors(e.target.value)} 
+                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-amber-500/60 transition-colors" 
+                />
               </div>
             </div>
           </div>
@@ -196,34 +253,49 @@ export default function NewProjectWizard() {
         {/* Step 2: Budget */}
         {currentStep === 1 && (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="sm:col-span-2">
-                <label className="block text-sm font-medium text-slate-700">Total Budget (Estimated)</label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <span className="text-slate-500 sm:text-sm">₹</span>
-                  </div>
-                  <input type="number" min="0" value={totalBudget} onChange={e => setTotalBudget(e.target.value)} className="block w-full pl-7 pr-12 px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="0" />
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Total Estimated Capital (INR)</label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-amber-400 font-mono text-sm">₹</span>
+                  <input 
+                    type="number" 
+                    min="0" 
+                    value={totalBudget} 
+                    onChange={e => setTotalBudget(e.target.value)} 
+                    className="w-full pl-8 pr-4 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors font-mono" 
+                    placeholder="5000000" 
+                  />
                 </div>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-slate-700">Construction Budget</label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <span className="text-slate-500 sm:text-sm">₹</span>
-                  </div>
-                  <input type="number" min="0" value={constructionBudget} onChange={e => setConstructionBudget(e.target.value)} className="block w-full pl-7 pr-12 px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="0" />
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Core Civil Structure Sub-Budget</label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500 font-mono text-sm">₹</span>
+                  <input 
+                    type="number" 
+                    min="0" 
+                    value={constructionBudget} 
+                    onChange={e => setConstructionBudget(e.target.value)} 
+                    className="w-full pl-8 pr-4 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors font-mono" 
+                    placeholder="3500000" 
+                  />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700">Interior Budget</label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <span className="text-slate-500 sm:text-sm">₹</span>
-                  </div>
-                  <input type="number" min="0" value={interiorBudget} onChange={e => setInteriorBudget(e.target.value)} className="block w-full pl-7 pr-12 px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="0" />
+                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Interior Millwork Sub-Budget</label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500 font-mono text-sm">₹</span>
+                  <input 
+                    type="number" 
+                    min="0" 
+                    value={interiorBudget} 
+                    onChange={e => setInteriorBudget(e.target.value)} 
+                    className="w-full pl-8 pr-4 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors font-mono" 
+                    placeholder="1500000" 
+                  />
                 </div>
               </div>
             </div>
@@ -234,16 +306,16 @@ export default function NewProjectWizard() {
         {currentStep === 2 && (
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Requirement Type</label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-2">Architectural Typology</label>
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                 {(['1BHK', '2BHK', '3BHK', '4BHK', 'Custom'] as const).map((type) => (
                   <button
                     key={type}
                     onClick={() => setBhkType(type)}
-                    className={`px-4 py-3 border rounded-lg text-sm font-medium transition-colors ${
+                    className={`px-4 py-3 border rounded-xl text-xs font-mono uppercase tracking-wider transition-all ${
                       bhkType === type 
-                        ? 'bg-blue-50 border-blue-600 text-blue-700 shadow-sm' 
-                        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                        ? 'bg-amber-500/10 border-amber-500/60 text-amber-300 font-bold ring-1 ring-amber-500/20' 
+                        : 'bg-zinc-950/60 border-zinc-800 text-zinc-400 hover:border-zinc-700'
                     }`}
                   >
                     {type}
@@ -252,16 +324,24 @@ export default function NewProjectWizard() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-200">
-              <h4 className="text-sm font-medium text-slate-900 mb-3">Room Checklist (Auto-filled by {bhkType})</h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-4 gap-x-6">
+            <div className="pt-4 border-t border-zinc-800/80">
+              <h4 className="text-xs font-mono uppercase tracking-widest text-zinc-400 mb-3">
+                Programmatic Spatial Scope ({bhkType})
+              </h4>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {[
-                  'Living Room', 'Dining', 'Kitchen', 'Bedrooms', 'Bathrooms', 
-                  'Balcony', 'Utility', 'Pooja Room', 'Study', 'Store', 'Parking'
+                  'Living Salon', 'Dining Hall', 'Culinary Kitchen', 'Master Suite', 
+                  'Guest Suites', 'Sanitary Ensuites', 'Panoramic Terrace', 'Service Balcony', 
+                  'Private Library / Study', 'Pooja Sanctuary', 'Covered Portico'
                 ].map((room) => (
-                  <div key={room} className="flex items-center">
-                    <input id={room} type="checkbox" defaultChecked className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-slate-300 rounded" />
-                    <label htmlFor={room} className="ml-2 block text-sm text-slate-700">{room}</label>
+                  <div key={room} className="flex items-center gap-2 p-2 rounded-lg bg-zinc-950/40 border border-zinc-800/50">
+                    <input 
+                      id={room} 
+                      type="checkbox" 
+                      defaultChecked 
+                      className="h-3.5 w-3.5 accent-amber-500 rounded bg-zinc-950 border-zinc-700" 
+                    />
+                    <label htmlFor={room} className="text-xs text-zinc-300">{room}</label>
                   </div>
                 ))}
               </div>
@@ -271,30 +351,33 @@ export default function NewProjectWizard() {
       </div>
 
       {error && (
-        <div className="mt-4 p-3 bg-red-50 text-red-700 text-sm rounded-md border border-red-200">
+        <div className="p-4 bg-rose-950/40 border border-rose-500/30 rounded-xl text-rose-300 text-xs">
           {error}
         </div>
       )}
 
-      <div className="mt-8 flex justify-between">
+      {/* Navigation Controls */}
+      <div className="flex justify-between pt-2">
         <button
           onClick={handleBack}
           disabled={currentStep === 0 || isPending}
-          className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
-            currentStep === 0 ? 'text-slate-400 cursor-not-allowed' : 'text-slate-700 bg-white border border-slate-300 hover:bg-slate-50'
+          className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-mono uppercase tracking-wider rounded-xl transition-all ${
+            currentStep === 0 
+              ? 'text-zinc-600 cursor-not-allowed opacity-50' 
+              : 'text-zinc-300 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800'
           }`}
         >
-          <ChevronLeft className="w-4 h-4 mr-1" />
-          Back
+          <ChevronLeft className="w-4 h-4" />
+          Previous Step
         </button>
         <button
           onClick={handleNext}
           disabled={isPending}
-          className="flex items-center px-5 py-2 text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 px-6 py-2.5 text-xs font-mono uppercase tracking-wider font-semibold rounded-xl text-zinc-950 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/20 transition-all disabled:opacity-50"
         >
-          {isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-          {currentStep === steps.length - 1 ? (isPending ? 'Creating...' : 'Create Project') : 'Continue'}
-          {currentStep !== steps.length - 1 && <ChevronRight className="w-4 h-4 ml-1" />}
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {currentStep === steps.length - 1 ? (isPending ? 'Commencing Project...' : 'Launch Project Hub') : 'Proceed Next'}
+          {currentStep !== steps.length - 1 && <ChevronRight className="w-4 h-4" />}
         </button>
       </div>
     </div>

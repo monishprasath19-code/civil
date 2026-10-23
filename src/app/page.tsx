@@ -1,5 +1,5 @@
-import FuturisticLanding from "@/components/landing/FuturisticLanding";
+import FigmaArchitecturalLanding from "@/components/landing/FigmaArchitecturalLanding";
 
 export default function LandingPage() {
-  return <FuturisticLanding />;
+  return <FigmaArchitecturalLanding />;
 }

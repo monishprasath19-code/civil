@@ -43,7 +43,6 @@ export default function CostDashboard({ projectId, projectName, projectState }: 
     setIsGenerating(false);
   };
 
-  // Add auto-save when estimate is generated
   useEffect(() => {
     if (costEstimate && !isGenerating) {
       handleSave();
@@ -85,9 +84,9 @@ export default function CostDashboard({ projectId, projectName, projectState }: 
 
   if (!costEstimate) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center">
-        <RefreshCw className="w-8 h-8 text-blue-500 animate-spin mb-4" />
-        <p className="text-slate-600 font-medium">Analyzing geometry & generating estimate...</p>
+      <div className="flex-1 flex flex-col items-center justify-center bg-[#faf8f5] font-sans h-screen">
+        <RefreshCw className="w-8 h-8 text-[#1b3a2b] animate-spin mb-4" />
+        <p className="text-[#57534e] font-medium">Analyzing geometry & calculating deterministic BOQ...</p>
       </div>
     );
   }
@@ -101,17 +100,17 @@ export default function CostDashboard({ projectId, projectName, projectState }: 
     : costEstimate.lineItems.filter(i => i.category === filterCat);
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="flex-1 flex flex-col overflow-hidden bg-[#faf8f5] font-sans">
       {/* Header */}
-      <header className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 shrink-0">
+      <header className="h-16 bg-white/90 backdrop-blur-md border-b border-[#e7e5df] flex items-center justify-between px-6 shrink-0 shadow-sm">
         <div className="flex items-center gap-4">
-          <Link href={`/dashboard/projects/${projectId}`} className="p-2 hover:bg-slate-100 rounded-md transition-colors text-slate-600">
+          <Link href={`/dashboard/projects/${projectId}`} className="p-2 hover:bg-[#faf8f5] rounded-full transition-colors text-[#78716c] hover:text-[#1c1917]">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="font-semibold text-slate-800 flex items-center gap-2">
+            <h1 className="font-serif text-lg text-[#1c1917] flex items-center gap-2.5 font-normal">
               {projectName} 
-              <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full font-medium">Cost Estimate</span>
+              <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 bg-[#1b3a2b]/10 text-[#1b3a2b] rounded-full font-semibold border border-[#1b3a2b]/20">Cost Estimate</span>
             </h1>
           </div>
         </div>
@@ -119,52 +118,52 @@ export default function CostDashboard({ projectId, projectName, projectState }: 
           <button 
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded hover:bg-slate-50 transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 text-xs font-mono uppercase tracking-wider font-semibold text-[#1c1917] bg-white border border-[#d6d3cc] rounded-full hover:bg-[#faf8f5] transition-colors disabled:opacity-50 shadow-sm"
           >
-            <RefreshCw className={`w-4 h-4 ${isGenerating ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isGenerating ? 'animate-spin' : ''}`} />
             Recalculate
           </button>
           <button 
             onClick={handleExportCSV}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 px-5 py-2 text-xs font-mono uppercase tracking-wider font-semibold text-white bg-[#1b3a2b] rounded-full hover:bg-[#14281d] transition-colors shadow-sm"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-3.5 h-3.5" />
             Export BOQ
           </button>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto p-6 bg-slate-50">
+      <main className="flex-1 overflow-y-auto p-6 sm:p-8 bg-[#faf8f5]">
         <div className="max-w-7xl mx-auto space-y-6">
           
           {/* Disclaimer */}
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex gap-3 text-amber-800 text-sm">
-            <AlertTriangle className="w-5 h-5 shrink-0" />
-            <p>
+          <div className="bg-[#f5f3ec] border border-[#e7e5df] rounded-2xl p-4 flex gap-3 text-[#1c1917] text-xs">
+            <AlertTriangle className="w-5 h-5 shrink-0 text-[#1b3a2b]" />
+            <p className="font-light leading-relaxed">
               <strong>PRELIMINARY ESTIMATE:</strong> AI Civil Agent provides planning estimates based on geometry, selected materials, and stated assumptions. Quantities, structural requirements, and local regulations must be verified by qualified professionals before construction.
             </p>
           </div>
 
           {/* Top KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-              <p className="text-sm font-medium text-slate-500 mb-1">Estimated Cost</p>
-              <p className="text-3xl font-bold text-slate-800">{formatCurrency(costEstimate.grandTotal, costEstimate.currency)}</p>
-              <div className="mt-2 text-xs text-slate-400">Includes {costEstimate.assumptions.contingencyPercentage}% contingency</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="bg-white p-6 rounded-3xl border border-[#e7e5df] shadow-sm">
+              <p className="text-xs font-mono uppercase tracking-widest text-[#78716c] mb-1">Estimated Cost</p>
+              <p className="text-3xl font-serif text-[#1c1917]">{formatCurrency(costEstimate.grandTotal, costEstimate.currency)}</p>
+              <div className="mt-2 text-xs text-[#a8a29e]">Includes {costEstimate.assumptions.contingencyPercentage}% contingency</div>
             </div>
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-              <p className="text-sm font-medium text-slate-500 mb-1">Target Budget</p>
-              <p className="text-3xl font-bold text-slate-800">{formatCurrency(budget, costEstimate.currency)}</p>
-              <div className="mt-2 text-xs text-slate-400">From project requirements</div>
+            <div className="bg-white p-6 rounded-3xl border border-[#e7e5df] shadow-sm">
+              <p className="text-xs font-mono uppercase tracking-widest text-[#78716c] mb-1">Target Budget</p>
+              <p className="text-3xl font-serif text-[#1c1917]">{formatCurrency(budget, costEstimate.currency)}</p>
+              <div className="mt-2 text-xs text-[#a8a29e]">From project requirements</div>
             </div>
-            <div className={`bg-white p-5 rounded-xl border ${isOver ? 'border-red-200' : 'border-green-200'} shadow-sm`}>
-              <p className="text-sm font-medium text-slate-500 mb-1">Difference</p>
-              <p className={`text-3xl font-bold ${isOver ? 'text-red-600' : 'text-green-600'}`}>
+            <div className="bg-white p-6 rounded-3xl border border-[#e7e5df] shadow-sm">
+              <p className="text-xs font-mono uppercase tracking-widest text-[#78716c] mb-1">Difference</p>
+              <p className={`text-3xl font-serif ${isOver ? 'text-rose-700' : 'text-emerald-700'}`}>
                 {isOver ? '+' : ''}{formatCurrency(difference, costEstimate.currency)}
               </p>
-              <div className={`mt-2 text-xs font-medium ${isOver ? 'text-red-500' : 'text-green-500'}`}>
-                {isOver ? 'Over budget' : 'Under budget'} ({(Math.abs(difference) / budget * 100).toFixed(1)}%)
+              <div className={`mt-2 text-xs font-medium ${isOver ? 'text-rose-600' : 'text-emerald-700'}`}>
+                {isOver ? 'Over budget' : 'Under budget'} ({(Math.abs(difference) / (budget || 1) * 100).toFixed(1)}%)
               </div>
             </div>
           </div>
@@ -173,16 +172,16 @@ export default function CostDashboard({ projectId, projectName, projectState }: 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
             {/* Category Breakdown */}
-            <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-              <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-                <h2 className="font-semibold text-slate-800 flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-slate-400" />
+            <div className="lg:col-span-2 bg-white rounded-3xl border border-[#e7e5df] shadow-sm overflow-hidden">
+              <div className="p-5 border-b border-[#f0ede6] flex items-center justify-between">
+                <h2 className="font-serif text-base text-[#1c1917] flex items-center gap-2 font-normal">
+                  <FileText className="w-4 h-4 text-[#1b3a2b]" />
                   Preliminary Bill of Quantities (BOQ)
                 </h2>
                 <select 
                   value={filterCat} 
                   onChange={e => setFilterCat(e.target.value)}
-                  className="text-sm border-slate-200 rounded-md focus:border-blue-500 focus:ring-blue-500"
+                  className="text-xs font-mono border border-[#d6d3cc] rounded-full px-3 py-1.5 focus:border-[#1b3a2b] bg-[#faf8f5] text-[#1c1917]"
                 >
                   <option value="All">All Categories</option>
                   {Array.from(new Set(costEstimate.lineItems.map(i => i.category))).map(cat => (
@@ -191,43 +190,43 @@ export default function CostDashboard({ projectId, projectName, projectState }: 
                 </select>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-sm">
+                <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-medium">
-                      <th className="p-3">Description</th>
-                      <th className="p-3 text-right">Qty</th>
-                      <th className="p-3 text-right">Mat Rate</th>
-                      <th className="p-3 text-right">Lab Rate</th>
-                      <th className="p-3 text-right">Total</th>
-                      <th className="p-3 text-center">Data</th>
+                    <tr className="bg-[#faf8f5] border-b border-[#e7e5df] text-[#78716c] font-mono uppercase text-[10px] tracking-wider">
+                      <th className="p-3.5">Description</th>
+                      <th className="p-3.5 text-right">Qty</th>
+                      <th className="p-3.5 text-right">Mat Rate</th>
+                      <th className="p-3.5 text-right">Lab Rate</th>
+                      <th className="p-3.5 text-right">Total</th>
+                      <th className="p-3.5 text-center">Data</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="divide-y divide-[#f0ede6]">
                     {filteredItems.map(item => (
-                      <tr key={item.id} className="border-b border-slate-100 hover:bg-slate-50/50">
-                        <td className="p-3">
-                          <div className="font-medium text-slate-800">{item.description}</div>
-                          <div className="text-xs text-slate-400 capitalize">{item.category}</div>
+                      <tr key={item.id} className="hover:bg-[#faf8f5]/80 transition-colors">
+                        <td className="p-3.5">
+                          <div className="font-medium text-[#1c1917]">{item.description}</div>
+                          <div className="text-[10px] font-mono text-[#a8a29e] capitalize">{item.category}</div>
                         </td>
-                        <td className="p-3 text-right">
-                          {item.quantity.toFixed(1)} <span className="text-slate-400">{item.unit}</span>
-                          {item.wastageFactor > 0 && <div className="text-[10px] text-amber-600">+{item.wastageFactor.toFixed(0)}% waste</div>}
+                        <td className="p-3.5 text-right font-mono">
+                          {item.quantity.toFixed(1)} <span className="text-[#a8a29e]">{item.unit}</span>
+                          {item.wastageFactor > 0 && <div className="text-[10px] text-amber-700">+{item.wastageFactor.toFixed(0)}% waste</div>}
                         </td>
                         
                         {editingItem === item.id ? (
                           <>
-                            <td className="p-3 text-right">
+                            <td className="p-3.5 text-right">
                               <input 
                                 type="number" 
-                                className="w-20 p-1 text-right text-xs border rounded"
+                                className="w-20 p-1 text-right text-xs border border-[#d6d3cc] rounded"
                                 defaultValue={overrides[item.id]?.material ?? item.materialRate}
                                 onChange={e => setOverrides(prev => ({ ...prev, [item.id]: { ...prev[item.id], material: parseFloat(e.target.value) || 0 } }))}
                               />
                             </td>
-                            <td className="p-3 text-right">
+                            <td className="p-3.5 text-right">
                               <input 
                                 type="number" 
-                                className="w-20 p-1 text-right text-xs border rounded"
+                                className="w-20 p-1 text-right text-xs border border-[#d6d3cc] rounded"
                                 defaultValue={overrides[item.id]?.labour ?? item.labourRate}
                                 onChange={e => setOverrides(prev => ({ ...prev, [item.id]: { ...prev[item.id], labour: parseFloat(e.target.value) || 0 } }))}
                               />
@@ -235,28 +234,28 @@ export default function CostDashboard({ projectId, projectName, projectState }: 
                           </>
                         ) : (
                           <>
-                            <td className="p-3 text-right text-slate-600 cursor-pointer hover:bg-slate-100 rounded" onClick={() => setEditingItem(item.id)}>
+                            <td className="p-3.5 text-right text-[#57534e] font-mono cursor-pointer hover:bg-[#f5f3ec] rounded" onClick={() => setEditingItem(item.id)}>
                               {item.materialRate > 0 ? formatCurrency(item.materialRate) : '-'}
-                              {overrides[item.id]?.material !== undefined && <span className="text-[10px] text-blue-500 block">Overridden</span>}
+                              {overrides[item.id]?.material !== undefined && <span className="text-[10px] text-emerald-700 block">Overridden</span>}
                             </td>
-                            <td className="p-3 text-right text-slate-600 cursor-pointer hover:bg-slate-100 rounded" onClick={() => setEditingItem(item.id)}>
+                            <td className="p-3.5 text-right text-[#57534e] font-mono cursor-pointer hover:bg-[#f5f3ec] rounded" onClick={() => setEditingItem(item.id)}>
                               {item.labourRate > 0 ? formatCurrency(item.labourRate) : '-'}
-                              {overrides[item.id]?.labour !== undefined && <span className="text-[10px] text-blue-500 block">Overridden</span>}
+                              {overrides[item.id]?.labour !== undefined && <span className="text-[10px] text-emerald-700 block">Overridden</span>}
                             </td>
                           </>
                         )}
                         
-                        <td className="p-3 text-right font-medium text-slate-700">
+                        <td className="p-3.5 text-right font-mono font-semibold text-[#1c1917]">
                           {formatCurrency(item.totalAmount)}
                         </td>
-                        <td className="p-3 text-center">
+                        <td className="p-3.5 text-center">
                           {editingItem === item.id ? (
-                            <button onClick={() => { setEditingItem(null); handleGenerate(); }} className="text-xs bg-blue-600 text-white px-2 py-1 rounded">Save</button>
+                            <button onClick={() => { setEditingItem(null); handleGenerate(); }} className="text-xs bg-[#1b3a2b] text-white px-2.5 py-1 rounded-full font-mono">Save</button>
                           ) : (
-                            <span className={`inline-block w-2 h-2 rounded-full ${
-                              item.confidence === 'high' ? 'bg-green-500' :
-                              item.confidence === 'medium' ? 'bg-amber-400' :
-                              item.confidence === 'low' ? 'bg-orange-500' : 'bg-red-500'
+                            <span className={`inline-block w-2.5 h-2.5 rounded-full ${
+                              item.confidence === 'high' ? 'bg-emerald-600' :
+                              item.confidence === 'medium' ? 'bg-amber-500' :
+                              item.confidence === 'low' ? 'bg-orange-500' : 'bg-rose-500'
                             }`} title={`Confidence: ${item.confidence}`} />
                           )}
                         </td>
@@ -264,7 +263,7 @@ export default function CostDashboard({ projectId, projectName, projectState }: 
                     ))}
                     {filteredItems.length === 0 && (
                       <tr>
-                        <td colSpan={6} className="p-8 text-center text-slate-500">
+                        <td colSpan={6} className="p-8 text-center text-[#78716c]">
                           No items found for this category.
                         </td>
                       </tr>
@@ -276,38 +275,38 @@ export default function CostDashboard({ projectId, projectName, projectState }: 
 
             {/* Assumptions Panel */}
             <div className="space-y-6">
-              <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                <h3 className="font-semibold text-slate-800 mb-4">Cost Assumptions</h3>
-                <ul className="space-y-3 text-sm">
-                  <li className="flex justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-500">Pricing Source</span>
-                    <span className="font-medium text-slate-700 text-right">{costEstimate.assumptions.pricingSource}</span>
+              <div className="bg-white p-6 rounded-3xl border border-[#e7e5df] shadow-sm">
+                <h3 className="font-serif text-base text-[#1c1917] mb-4 font-normal">Cost Assumptions</h3>
+                <ul className="space-y-3 text-xs">
+                  <li className="flex justify-between border-b border-[#f0ede6] pb-2 font-mono">
+                    <span className="text-[#78716c]">Pricing Source</span>
+                    <span className="font-medium text-[#1c1917] text-right">{costEstimate.assumptions.pricingSource}</span>
                   </li>
-                  <li className="flex justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-500">Rate Date</span>
-                    <span className="font-medium text-slate-700 text-right">{new Date(costEstimate.assumptions.rateDate).toLocaleDateString()}</span>
+                  <li className="flex justify-between border-b border-[#f0ede6] pb-2 font-mono">
+                    <span className="text-[#78716c]">Rate Date</span>
+                    <span className="font-medium text-[#1c1917] text-right">{new Date(costEstimate.assumptions.rateDate).toLocaleDateString()}</span>
                   </li>
-                  <li className="flex justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-500">Regional Factor</span>
-                    <span className="font-medium text-slate-700 text-right">{costEstimate.assumptions.regionalFactor}x</span>
+                  <li className="flex justify-between border-b border-[#f0ede6] pb-2 font-mono">
+                    <span className="text-[#78716c]">Regional Factor</span>
+                    <span className="font-medium text-[#1c1917] text-right">{costEstimate.assumptions.regionalFactor}x</span>
                   </li>
-                  <li className="flex justify-between border-b border-slate-50 pb-2">
-                    <span className="text-slate-500">Contingency</span>
-                    <span className="font-medium text-slate-700 text-right">{costEstimate.assumptions.contingencyPercentage}%</span>
+                  <li className="flex justify-between border-b border-[#f0ede6] pb-2 font-mono">
+                    <span className="text-[#78716c]">Contingency</span>
+                    <span className="font-medium text-[#1c1917] text-right">{costEstimate.assumptions.contingencyPercentage}%</span>
                   </li>
-                  <li className="flex justify-between pb-2">
-                    <span className="text-slate-500">Labour</span>
-                    <span className="font-medium text-slate-700 text-right">{costEstimate.assumptions.labourAssumptions}</span>
+                  <li className="flex justify-between pb-2 font-mono">
+                    <span className="text-[#78716c]">Labour</span>
+                    <span className="font-medium text-[#1c1917] text-right">{costEstimate.assumptions.labourAssumptions}</span>
                   </li>
                 </ul>
               </div>
 
-              <div className="bg-slate-800 p-5 rounded-xl text-white shadow-sm">
-                <h3 className="font-semibold mb-2">Want better accuracy?</h3>
-                <p className="text-sm text-slate-300 mb-4">
+              <div className="bg-[#14281d] p-6 rounded-3xl text-white shadow-sm">
+                <h3 className="font-serif text-base mb-2 font-normal">Higher Precision Takeoff</h3>
+                <p className="text-xs text-white/80 mb-5 leading-relaxed font-light">
                   Add more materials in the 3D Planner, or input custom contractor rates to override default approximations.
                 </p>
-                <Link href={`/dashboard/projects/${projectId}/3d`} className="block text-center w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 rounded-lg transition-colors text-sm">
+                <Link href={`/dashboard/projects/${projectId}/3d`} className="block text-center w-full bg-white hover:bg-[#faf8f5] text-[#14281d] font-semibold py-2.5 rounded-full transition-colors text-xs font-mono uppercase tracking-wider shadow-sm">
                   Return to 3D Editor
                 </Link>
               </div>

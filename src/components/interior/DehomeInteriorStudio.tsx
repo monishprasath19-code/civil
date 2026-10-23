@@ -200,18 +200,18 @@ export default function DehomeInteriorStudio({ activeProjectId }: { activeProjec
     <div className="space-y-10">
       
       {/* Studio Header Bar */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border border-zinc-800/80 p-8 shadow-2xl">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-3xl bg-[#14281d] text-white p-8 sm:p-10 shadow-md">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[11px] font-mono uppercase tracking-[0.2em]">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 text-[11px] font-mono uppercase tracking-[0.2em]">
               <Sparkles className="w-3.5 h-3.5" />
               Dehome AI Studio • Architectural Redesign Engine
             </div>
-            <h1 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-serif text-white tracking-tight font-normal">
               AI Interior Design & Visual Staging
             </h1>
-            <p className="text-sm text-zinc-400 font-light leading-relaxed">
+            <p className="text-sm text-white/80 font-light leading-relaxed">
               Transform raw floor plans, empty spatial shells, or existing room snapshots into award-winning photorealistic interiors in seconds. Drag the slider to inspect before-and-after transformations.
             </p>
           </div>
@@ -220,18 +220,18 @@ export default function DehomeInteriorStudio({ activeProjectId }: { activeProjec
             {activeProjectId && (
               <Link
                 href={`/dashboard/projects/${activeProjectId}/3d`}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs font-mono uppercase tracking-wider transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white text-xs font-mono uppercase tracking-wider transition-all"
               >
-                <Box className="w-4 h-4 text-amber-400" />
+                <Box className="w-4 h-4 text-emerald-300" />
                 Open 3D Viewport
               </Link>
             )}
             <button
               onClick={handleGenerate}
               disabled={isGenerating}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 font-bold text-xs font-mono uppercase tracking-wider transition-all shadow-lg shadow-amber-500/20 active:scale-95 disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white hover:bg-[#faf8f5] text-[#14281d] font-semibold text-xs font-mono uppercase tracking-wider transition-all shadow-sm active:scale-95 disabled:opacity-50"
             >
-              <Wand2 className="w-4 h-4 stroke-[2.5]" />
+              <Wand2 className="w-4 h-4 stroke-[2.2]" />
               {isGenerating ? "Synthesizing..." : "Generate AI Concept"}
             </button>
           </div>

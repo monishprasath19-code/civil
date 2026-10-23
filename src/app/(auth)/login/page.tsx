@@ -32,28 +32,28 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-[#faf8f5] text-[#1c1917] flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans selection:bg-[#1b3a2b]/20 selection:text-[#1b3a2b]">
       
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <Link href="/" className="inline-flex items-center gap-3 group mb-4">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 flex items-center justify-center text-zinc-950 shadow-xl shadow-amber-500/20 group-hover:scale-105 transition-transform border border-amber-300/30">
-            <Compass className="w-6 h-6 stroke-[2.5]" />
+          <div className="w-12 h-12 rounded-2xl bg-[#1b3a2b] flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
+            <Compass className="w-6 h-6 stroke-[2.2]" />
           </div>
         </Link>
-        <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-amber-400/90 font-medium block">
-          Maison Civil • Atelier Login
+        <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#1b3a2b] font-semibold block">
+          Maison & Civil • Atelier Login
         </span>
-        <h2 className="mt-2 text-3xl font-serif text-white tracking-tight">
+        <h2 className="mt-2 text-3xl font-serif text-[#1c1917] tracking-tight font-normal">
           Enter Architectural Console
         </h2>
-        <p className="mt-2 text-xs text-zinc-400 font-light">
+        <p className="mt-2 text-xs text-[#78716c] font-light">
           Access your commissioned 2D CAD floor plans, 3D PBR engines, and structural BOQs.
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
-        <div className="bg-zinc-900/60 backdrop-blur-xl py-8 px-6 sm:px-10 rounded-3xl border border-zinc-800/80 shadow-2xl space-y-6">
+        <div className="bg-white py-8 px-6 sm:px-10 rounded-3xl border border-[#e7e5df] shadow-sm space-y-6">
           
           {/* 1-Click Instant Access Button (NO EMAIL VERIFICATION NEEDED) */}
           <div className="space-y-2">
@@ -61,31 +61,31 @@ export default function LoginPage() {
               type="button"
               onClick={handleInstantAccess}
               disabled={isPending}
-              className="w-full flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 font-bold text-xs font-mono uppercase tracking-wider transition-all shadow-lg shadow-amber-500/20 active:scale-[0.99] disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2.5 py-3 px-4 rounded-full bg-[#1b3a2b] hover:bg-[#14281d] text-white font-semibold text-xs font-mono uppercase tracking-wider transition-all shadow-sm active:scale-[0.99] disabled:opacity-50"
             >
-              <Zap className="w-4 h-4 fill-zinc-950" />
+              <Zap className="w-4 h-4 fill-white" />
               Instant Access (No Verification Needed)
             </button>
-            <p className="text-[10px] text-zinc-500 text-center font-mono">
+            <p className="text-[10px] text-[#78716c] text-center font-mono">
               Bypasses email confirmation • Enters directly into dashboard
             </p>
           </div>
 
           <div className="relative flex items-center justify-center">
-            <div className="w-full border-t border-zinc-800" />
-            <span className="absolute bg-zinc-900 px-3 text-[10px] font-mono uppercase tracking-wider text-zinc-500">
+            <div className="w-full border-t border-[#f0ede6]" />
+            <span className="absolute bg-white px-3 text-[10px] font-mono uppercase tracking-wider text-[#a8a29e]">
               Or sign in with email
             </span>
           </div>
 
           {error && (
-            <div className="p-3.5 bg-rose-950/40 border border-rose-500/30 rounded-xl text-rose-300 text-xs space-y-2">
+            <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-2xl text-rose-800 text-xs space-y-2">
               <p>{error}</p>
               {showBypass && (
                 <button
                   type="button"
                   onClick={handleInstantAccess}
-                  className="w-full py-2 bg-amber-500 text-zinc-950 font-mono text-[10px] uppercase font-bold rounded-lg hover:bg-amber-400 transition-colors"
+                  className="w-full py-2 bg-[#1b3a2b] text-white font-mono text-[10px] uppercase font-bold rounded-full hover:bg-[#14281d] transition-colors"
                 >
                   ⚡ Click Here for Instant Access
                 </button>
@@ -95,7 +95,7 @@ export default function LoginPage() {
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+              <label htmlFor="email" className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">
                 Email Address
               </label>
               <input 
@@ -105,12 +105,12 @@ export default function LoginPage() {
                 autoComplete="email" 
                 required 
                 placeholder="architect@atelier.com"
-                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-xl text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors font-sans" 
+                className="w-full px-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] placeholder-[#a8a29e] focus:outline-none focus:border-[#1b3a2b] transition-colors font-sans" 
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+              <label htmlFor="password" className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">
                 Password
               </label>
               <input 
@@ -120,7 +120,7 @@ export default function LoginPage() {
                 autoComplete="current-password" 
                 required 
                 placeholder="••••••••"
-                className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-xl text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors font-sans" 
+                className="w-full px-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] placeholder-[#a8a29e] focus:outline-none focus:border-[#1b3a2b] transition-colors font-sans" 
               />
             </div>
 
@@ -128,17 +128,17 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="w-full flex justify-center py-2.5 px-4 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold text-zinc-200 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 transition-colors disabled:opacity-50"
+                className="w-full flex justify-center py-2.5 px-4 rounded-full text-xs font-mono uppercase tracking-wider font-semibold text-[#1c1917] bg-white hover:bg-[#faf8f5] border border-[#d6d3cc] transition-colors disabled:opacity-50 shadow-sm"
               >
                 {isPending ? "Authenticating..." : "Sign in with Credentials"}
               </button>
             </div>
           </form>
 
-          <div className="text-center pt-2 border-t border-zinc-800/80">
-            <p className="text-xs text-zinc-400">
+          <div className="text-center pt-2 border-t border-[#f0ede6]">
+            <p className="text-xs text-[#78716c]">
               New architect?{" "}
-              <Link href="/signup" className="text-amber-400 hover:text-amber-300 font-mono uppercase tracking-wider text-[11px] transition-colors">
+              <Link href="/signup" className="text-[#1b3a2b] hover:text-[#14281d] font-mono uppercase tracking-wider text-[11px] font-semibold transition-colors">
                 Create Account
               </Link>
             </p>

@@ -35,7 +35,7 @@ export default function AIChatPanel() {
     setPendingMessage(null);
     
     try {
-      const activeFloor = floors.find(f => f.id === activeFloorId);
+      const activeFloor = floors.find(f => f.id === activeFloorId) || (floors.length > 0 ? floors[0] : null);
 
       // Full rich context for architectural accuracy
       const context = {
@@ -91,7 +91,19 @@ export default function AIChatPanel() {
           userId: 'temp', 
           createdAt: '', 
           updatedAt: '',
-          site: site!, 
+          site: site || { 
+            projectName: 'temp', 
+            location: 'Site Location', 
+            plotLength: 20, 
+            plotWidth: 15, 
+            plotArea: 300, 
+            unit: 'meters', 
+            roadDirection: 'N', 
+            northDirection: 0, 
+            numberOfFloors: 1, 
+            terrain: 'flat', 
+            climate: 'tropical' 
+          }, 
           budget: { totalBudget: 0, constructionBudget: 0, interiorBudget: 0, exteriorBudget: 0, furnitureBudget: 0 },
           requirements: { type: 'Custom', rooms: {} },
           floors: JSON.parse(JSON.stringify(floors)),
@@ -114,7 +126,6 @@ export default function AIChatPanel() {
         }
 
         if (isValid) {
-          // Immediately apply if user wants direct execution, but present preview option
           setPendingProject(tempProject);
           setPendingMessage(data.message);
         } else {
@@ -149,54 +160,54 @@ export default function AIChatPanel() {
 
   return (
     <>
-      {/* Floating Launcher Button */}
+      {/* Floating Launcher Button - Figma Forest Green Theme */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute bottom-6 right-6 p-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 rounded-2xl shadow-xl shadow-amber-500/20 hover:scale-105 transition-all z-40 flex items-center gap-2 group border border-amber-300/40"
-        title="AI Civil Architect & Interior Agent"
+        className="absolute bottom-6 right-6 px-4 py-3 bg-[#1b3a2b] hover:bg-[#14281d] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all z-40 flex items-center gap-2 group border border-emerald-900/40"
+        title="AI Civil Architect & Interior Studio"
       >
-        <Bot className="w-5 h-5 text-zinc-950 stroke-[2.5]" />
-        <span className="text-xs font-mono uppercase tracking-wider font-bold hidden sm:inline">AI Civil Studio</span>
+        <Bot className="w-4 h-4 text-white stroke-[2.2]" />
+        <span className="text-xs font-mono uppercase tracking-wider font-semibold">AI Civil Studio</span>
       </button>
 
-      {/* Cartier Obsidian & Gold Modal Panel */}
+      {/* Figma Architectural Light Modal Panel */}
       {isOpen && (
-        <div className="absolute bottom-20 right-4 sm:right-6 w-[94vw] sm:w-[420px] max-h-[82vh] flex flex-col bg-zinc-950/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-zinc-800 z-40 overflow-hidden">
+        <div className="absolute bottom-20 right-4 sm:right-6 w-[94vw] sm:w-[430px] max-h-[82vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-[#e7e5df] z-40 overflow-hidden font-sans">
           
           {/* Header */}
-          <div className="bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border-b border-zinc-800/80 p-4 flex justify-between items-center z-10">
+          <div className="bg-[#faf8f5] border-b border-[#e7e5df] p-4 flex justify-between items-center z-10">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-zinc-950 shadow-md">
-                <Compass className="w-4 h-4 stroke-[2.5]" />
+              <div className="w-8 h-8 rounded-full bg-[#1b3a2b] flex items-center justify-center text-white shadow-sm">
+                <Compass className="w-4 h-4 text-white" />
               </div>
               <div>
-                <h3 className="font-serif font-medium text-sm text-white flex items-center gap-1.5">
-                  AI Civil Intelligence Studio
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <h3 className="font-serif font-normal text-sm text-[#1c1917] flex items-center gap-1.5">
+                  Civil Intelligence Atelier
+                  <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
                 </h3>
-                <p className="text-[10px] font-mono uppercase tracking-widest text-amber-400/80">
-                  Autonomous Architectural Agent
+                <p className="text-[10px] font-mono uppercase tracking-widest text-[#78716c]">
+                  Spatial Automation & BOQ Engine
                 </p>
               </div>
             </div>
             <button 
               onClick={() => setIsOpen(false)} 
-              className="p-1.5 rounded-lg hover:bg-zinc-800 text-zinc-400 hover:text-white transition-colors"
+              className="p-1.5 rounded-full hover:bg-[#e7e5df] text-[#78716c] hover:text-[#1c1917] transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Chat Messages Body */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-zinc-950">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#faf8f5]">
             {messages.length === 0 && (
-              <div className="text-center p-5 bg-zinc-900/60 rounded-xl border border-zinc-800/80 mt-2 space-y-3">
-                <div className="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/20 mx-auto flex items-center justify-center text-amber-400">
-                  <Sparkles className="w-5 h-5" />
+              <div className="text-center p-5 bg-white rounded-2xl border border-[#e7e5df] mt-1 space-y-3 shadow-sm">
+                <div className="w-10 h-10 rounded-full bg-[#1b3a2b]/10 border border-[#1b3a2b]/20 mx-auto flex items-center justify-center text-[#1b3a2b]">
+                  <Sparkles className="w-5 h-5 text-[#1b3a2b]" />
                 </div>
-                <h4 className="text-sm font-serif text-zinc-200">How may I direct your blueprint?</h4>
-                <p className="text-xs text-zinc-400 leading-relaxed font-light">
-                  I can modify floor materials, place luxury furniture suites, calculate structural BOQs, and adjust solar lighting in real time.
+                <h4 className="text-sm font-serif text-[#1c1917]">How may I assist your plan?</h4>
+                <p className="text-xs text-[#57534e] leading-relaxed font-light">
+                  I can apply PBR flooring materials, insert calibrated furniture, calculate structural takeoffs, and adjust solar lighting in real time.
                 </p>
                 <div className="flex flex-wrap justify-center gap-1.5 pt-2">
                   {[
@@ -205,13 +216,13 @@ export default function AIChatPanel() {
                     "Add a sofa and coffee table",
                     "How much will my project cost?",
                     "Change roof to sloped",
-                    "Optimize living room for natural daylight",
-                    "Set atmosphere to evening golden hour"
+                    "Optimize living room for daylight",
+                    "Set atmosphere to evening sunset"
                   ].map(prompt => (
                     <button 
                       key={prompt}
                       onClick={() => handleSend(prompt)}
-                      className="text-[10px] bg-zinc-900 hover:bg-amber-500/10 text-zinc-300 hover:text-amber-300 px-2.5 py-1.5 rounded-lg transition-all border border-zinc-800 hover:border-amber-500/40 font-mono text-left"
+                      className="text-[10px] bg-[#faf8f5] hover:bg-[#1b3a2b] hover:text-white text-[#57534e] px-2.5 py-1.5 rounded-full transition-all border border-[#d6d3cc] font-mono text-left"
                     >
                       {prompt}
                     </button>
@@ -224,13 +235,13 @@ export default function AIChatPanel() {
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[88%] p-3.5 rounded-2xl text-xs leading-relaxed shadow-sm border ${
                   msg.role === 'user' 
-                    ? 'bg-amber-500/10 text-amber-200 border-amber-500/30 rounded-tr-sm font-mono' 
-                    : 'bg-zinc-900/80 text-zinc-200 border-zinc-800 rounded-tl-sm'
+                    ? 'bg-[#1b3a2b] text-white border-transparent rounded-tr-sm font-sans' 
+                    : 'bg-white text-[#1c1917] border-[#e7e5df] rounded-tl-sm'
                 }`}>
                   <div className="whitespace-pre-line">{msg.content}</div>
                   
                   {msg.payload && msg.payload.cost && (
-                    <div className="mt-2.5 p-2.5 bg-zinc-950 rounded-xl border border-zinc-800 font-mono text-[11px] text-amber-400">
+                    <div className="mt-2.5 p-2.5 bg-[#faf8f5] rounded-xl border border-[#e7e5df] font-mono text-[11px] text-[#1b3a2b]">
                       <strong>Financial Breakdown:</strong> {msg.payload.cost}
                     </div>
                   )}
@@ -241,24 +252,24 @@ export default function AIChatPanel() {
             {/* Pending Simulation Action Card */}
             {pendingProject && (
               <div className="flex justify-start">
-                <div className="max-w-[92%] p-4 rounded-2xl text-xs shadow-xl border bg-amber-500/10 text-amber-200 border-amber-500/30 rounded-tl-sm space-y-3">
+                <div className="max-w-[92%] p-4 rounded-2xl text-xs shadow-md border bg-white border-[#1b3a2b]/30 rounded-tl-sm space-y-3">
                   <div className="flex items-start gap-2">
-                    <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                    <p className="font-medium text-white">{pendingMessage}</p>
+                    <Sparkles className="w-4 h-4 text-[#1b3a2b] shrink-0 mt-0.5" />
+                    <p className="font-medium text-[#1c1917]">{pendingMessage}</p>
                   </div>
-                  <p className="text-[11px] text-zinc-400">
-                    Preview generated. Synchronize these modifications to your 2D CAD canvas and 3D viewport?
+                  <p className="text-[11px] text-[#78716c]">
+                    Preview ready. Synchronize these modifications to your 2D CAD canvas and 3D viewport?
                   </p>
                   <div className="flex gap-2 pt-1">
                     <button 
                       onClick={handleApply} 
-                      className="flex-1 flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 py-2 rounded-lg font-mono uppercase tracking-wider text-[10px] font-bold transition-all shadow-md"
+                      className="flex-1 flex items-center justify-center gap-1.5 bg-[#1b3a2b] hover:bg-[#14281d] text-white py-2 rounded-full font-mono uppercase tracking-wider text-[10px] font-semibold transition-all shadow-sm"
                     >
                       <Check className="w-3.5 h-3.5 stroke-[3]" /> Apply Changes
                     </button>
                     <button 
                       onClick={handleCancel} 
-                      className="flex-1 flex items-center justify-center gap-1.5 bg-zinc-900 text-zinc-400 hover:text-zinc-200 py-2 rounded-lg font-mono uppercase tracking-wider text-[10px] border border-zinc-800 transition-colors"
+                      className="flex-1 flex items-center justify-center gap-1.5 bg-white text-[#57534e] hover:bg-[#faf8f5] py-2 rounded-full font-mono uppercase tracking-wider text-[10px] border border-[#d6d3cc] transition-colors"
                     >
                       <XCircle className="w-3.5 h-3.5" /> Dismiss
                     </button>
@@ -269,11 +280,11 @@ export default function AIChatPanel() {
             
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-zinc-900 border border-zinc-800 text-zinc-400 p-3 rounded-2xl rounded-tl-sm text-xs shadow-sm flex items-center gap-2 font-mono">
+                <div className="bg-white border border-[#e7e5df] text-[#57534e] p-3 rounded-2xl rounded-tl-sm text-xs shadow-sm flex items-center gap-2 font-mono">
                   <div className="flex gap-1">
-                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce"></span>
+                    <span className="w-1.5 h-1.5 bg-[#1b3a2b] rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                    <span className="w-1.5 h-1.5 bg-[#1b3a2b] rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                    <span className="w-1.5 h-1.5 bg-[#1b3a2b] rounded-full animate-bounce"></span>
                   </div>
                   Evaluating architectural geometry...
                 </div>
@@ -282,23 +293,23 @@ export default function AIChatPanel() {
           </div>
 
           {/* Text Input Dock */}
-          <div className="p-3 bg-zinc-950 border-t border-zinc-800/80">
-            <div className="flex items-center gap-2 bg-zinc-900/80 border border-zinc-800 rounded-xl p-1 pr-1.5 focus-within:border-amber-500/50 transition-all">
+          <div className="p-3 bg-white border-t border-[#e7e5df]">
+            <div className="flex items-center gap-2 bg-[#faf8f5] border border-[#d6d3cc] rounded-full p-1 pr-1.5 focus-within:border-[#1b3a2b] transition-all">
               <input 
                 type="text"
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSend()}
                 placeholder="Ask to change materials, add beds, optimize layout..."
-                className="flex-1 bg-transparent border-none focus:outline-none p-2 text-xs text-zinc-100 placeholder:text-zinc-500"
+                className="flex-1 bg-transparent border-none focus:outline-none px-3 py-2 text-xs text-[#1c1917] placeholder:text-[#a8a29e]"
                 disabled={isLoading || !!pendingProject}
               />
               <button 
                 onClick={() => handleSend()}
                 disabled={!input.trim() || isLoading || !!pendingProject}
-                className="p-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-zinc-950 rounded-lg disabled:opacity-40 transition-all"
+                className="p-2 bg-[#1b3a2b] hover:bg-[#14281d] text-white rounded-full disabled:opacity-40 transition-all shadow-sm"
               >
-                <Send className="w-3.5 h-3.5 stroke-[2.5]" />
+                <Send className="w-3.5 h-3.5 stroke-[2.2]" />
               </button>
             </div>
           </div>

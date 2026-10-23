@@ -16,16 +16,16 @@ export default async function ConstructionMilestonesPage() {
   ];
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto pb-16">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-amber-500/20 pb-6">
+    <div className="space-y-8 max-w-7xl mx-auto pb-16 font-sans">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#e7e5df] pb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="font-mono text-[10px] tracking-[0.25em] text-amber-400 uppercase">SUIVI DE CHANTIER</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-            <span className="text-xs text-zinc-400 font-mono">Structural Execution Tracking</span>
+            <span className="font-mono text-[10px] tracking-[0.25em] text-[#1b3a2b] uppercase font-semibold">SUIVI DE CHANTIER</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+            <span className="text-xs text-[#78716c] font-mono">Structural Execution Tracking</span>
           </div>
-          <h1 className="text-3xl font-serif text-white tracking-wide">Construction Milestones</h1>
-          <p className="text-zinc-400 text-sm mt-1">
+          <h1 className="text-3xl font-serif text-[#1c1917] tracking-tight font-normal">Construction Milestones</h1>
+          <p className="text-[#78716c] text-sm mt-1 max-w-2xl font-light">
             Track site execution progress against verified architectural drawings, structural milestones, and material delivery schedules.
           </p>
         </div>
@@ -36,27 +36,27 @@ export default async function ConstructionMilestonesPage() {
         {standardMilestones.map((m, idx) => (
           <div 
             key={idx}
-            className="p-6 rounded-2xl bg-zinc-950/90 border border-zinc-800/80 shadow-xl relative overflow-hidden"
+            className="p-7 rounded-3xl bg-white border border-[#e7e5df] shadow-sm relative overflow-hidden"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-serif text-lg text-white">{m.phase}</h3>
-              <span className="text-xs font-mono font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-full">
+              <h3 className="font-serif text-lg text-[#1c1917] font-normal">{m.phase}</h3>
+              <span className="text-xs font-mono font-semibold text-[#1b3a2b] bg-[#1b3a2b]/10 border border-[#1b3a2b]/20 px-3 py-1 rounded-full">
                 {m.progress}% Completed
               </span>
             </div>
 
-            <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden mb-5">
+            <div className="h-2 w-full bg-[#f0ede6] rounded-full overflow-hidden mb-5">
               <div 
-                className="h-full bg-gradient-to-r from-amber-500 to-amber-300 rounded-full transition-all duration-500" 
+                className="h-full bg-[#1b3a2b] rounded-full transition-all duration-500" 
                 style={{ width: `${m.progress}%` }} 
               />
             </div>
 
-            <ul className="space-y-2.5 text-xs text-zinc-300">
+            <ul className="space-y-2.5 text-xs text-[#57534e]">
               {m.tasks.map((task, tidx) => (
                 <li key={tidx} className="flex items-center gap-2.5">
-                  <CheckCircle2 className={`w-3.5 h-3.5 ${tidx === 0 || m.progress > 50 ? 'text-amber-400' : 'text-zinc-600'}`} />
-                  <span className={tidx === 0 || m.progress > 50 ? 'text-zinc-200' : 'text-zinc-500'}>{task}</span>
+                  <CheckCircle2 className={`w-3.5 h-3.5 ${tidx === 0 || m.progress > 50 ? 'text-[#1b3a2b]' : 'text-[#a8a29e]'}`} />
+                  <span className={tidx === 0 || m.progress > 50 ? 'text-[#1c1917]' : 'text-[#78716c]'}>{task}</span>
                 </li>
               ))}
             </ul>
@@ -66,19 +66,19 @@ export default async function ConstructionMilestonesPage() {
 
       {/* Connected Projects */}
       <div className="pt-6">
-        <h2 className="text-xl font-serif text-white mb-4">Active Projects in Construction Pipeline</h2>
+        <h2 className="text-xl font-serif text-[#1c1917] mb-4 font-normal">Active Projects in Construction Pipeline</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {projects.map(p => (
             <Link
               key={p.id}
               href={`/dashboard/projects/${p.id}`}
-              className="p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800/80 hover:border-amber-500/40 transition-all flex items-center justify-between group"
+              className="p-5 rounded-3xl bg-white border border-[#e7e5df] hover:border-[#1b3a2b] transition-all flex items-center justify-between group shadow-sm hover:shadow-md"
             >
               <div>
-                <h4 className="font-serif text-white group-hover:text-amber-300 transition-colors">{p.name}</h4>
-                <p className="text-[11px] font-mono text-zinc-500 mt-0.5">{p.site?.location || 'Custom Site'}</p>
+                <h4 className="font-serif text-[#1c1917] group-hover:text-[#1b3a2b] transition-colors">{p.name}</h4>
+                <p className="text-[11px] font-mono text-[#78716c] mt-0.5">{p.site?.location || 'Custom Site'}</p>
               </div>
-              <ArrowRight className="w-4 h-4 text-zinc-500 group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
+              <ArrowRight className="w-4 h-4 text-[#78716c] group-hover:text-[#1b3a2b] group-hover:translate-x-1 transition-all" />
             </Link>
           ))}
         </div>

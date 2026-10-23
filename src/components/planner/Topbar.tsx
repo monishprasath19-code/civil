@@ -90,7 +90,7 @@ export default function Topbar({ onSave, saveStatus, projectName }: { onSave: ()
         <div className="h-6 w-px bg-slate-200 mx-1" />
 
         <div className="flex items-center gap-1">
-          <button onClick={toggleSnap} className={`p-1.5 rounded transition-colors ${snapToGrid ? 'bg-blue-100 text-blue-700' : 'text-slate-600 hover:bg-slate-100'}`} title="Snap to Grid">
+          <button onClick={toggleSnap} className={`p-1.5 rounded transition-colors ${snapToGrid ? 'bg-[#1b3a2b]/10 text-[#1b3a2b]' : 'text-slate-600 hover:bg-slate-100'}`} title="Snap to Grid">
             <Magnet className="w-5 h-5" />
           </button>
           {/* We will always render the grid but snapping can be toggled */}
@@ -101,23 +101,23 @@ export default function Topbar({ onSave, saveStatus, projectName }: { onSave: ()
         <select 
           value={activeFloorId || ''} 
           onChange={e => setActiveFloor(e.target.value)}
-          className="text-sm border border-slate-300 rounded px-2 py-1 bg-slate-50 focus:outline-none focus:border-blue-500"
+          className="text-xs font-mono border border-slate-300 rounded-full px-3 py-1.5 bg-[#faf8f5] focus:outline-none focus:border-[#1b3a2b]"
         >
           {floors.map(f => (
             <option key={f.id} value={f.id}>{f.name}</option>
           ))}
         </select>
         
-        <button onClick={handleLoadDemo} className="text-xs font-medium text-amber-600 hover:text-amber-700 hover:bg-amber-50 px-2 py-1.5 rounded border border-amber-200 transition-colors">
+        <button onClick={handleLoadDemo} className="text-xs font-mono text-[#1b3a2b] hover:bg-[#faf8f5] px-3 py-1.5 rounded-full border border-[#d6d3cc] transition-colors">
           Load Demo Plan
         </button>
 
         <button 
           onClick={onSave}
           disabled={saveStatus === 'saving'}
-          className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm transition-colors disabled:opacity-70"
+          className="flex items-center gap-2 px-5 py-1.5 bg-[#1b3a2b] hover:bg-[#14281d] text-white text-xs font-mono uppercase tracking-wider font-semibold rounded-full shadow-sm transition-colors disabled:opacity-70"
         >
-          <Save className="w-4 h-4" />
+          <Save className="w-3.5 h-3.5" />
           {saveStatus === 'idle' && "Save"}
           {saveStatus === 'saving' && "Saving..."}
           {saveStatus === 'saved' && "Saved"}

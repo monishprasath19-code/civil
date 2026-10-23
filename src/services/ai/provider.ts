@@ -11,33 +11,37 @@ export class HybridAIProvider implements AIProvider {
   async processCommand(prompt: string, context: any): Promise<AIUnifiedResponse> {
     const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 
-    // If an official Google AI Studio API key starting with AIzaSy is present, try Cloud Gemini
-    if (apiKey && apiKey.startsWith('AIzaSy')) {
+    // If an official Google AI Studio API key starting with AIzaSy is present, try Cloud Gemini with 4s timeout
+    if (apiKey && apiKey.startsWith('AIzaSy') && apiKey.length > 20) {
       try {
-        const systemPrompt = `You are an AI Civil Architecture & Interior Design Agent.
-You modify a structured project JSON or query project state.
-You MUST follow these rules:
-1. Be concise.
-2. Explain what changed.
-3. NEVER invent data (prices, geometry, material specs).
-4. Use the provided project context to form semantic actions (like MOVE_NEAR_WINDOW) or direct actions.
-5. Do NOT do math calculations directly; use actions like RECALCULATE_COST.
+        const systemPrompt = `You are an expert AI Civil Architecture & Interior Design Agent.
+You answer civil engineering questions, calculate structural quantities, or modify structured project JSON.
+Rules:
+1. Be concise, highly professional, and informative.
+2. If explaining structural concepts, provide actionable civil engineering standards (NBC/IS/IBC).
+3. If modifying project, use semantic actions.
 
 Current Context:
-${JSON.stringify(context, null, 2)}`;
+${JSON.stringify(context || {}, null, 2)}`;
 
-        const { object } = await generateObject({
+        const timeoutPromise = new Promise<never>((_, reject) => 
+          setTimeout(() => reject(new Error("Cloud Gemini timed out")), 4000)
+        );
+
+        const geminiPromise = generateObject({
           model: google('gemini-1.5-flash'),
           schema: AIUnifiedResponseSchema,
           system: systemPrompt,
           prompt: prompt,
         });
 
+        const { object } = await Promise.race([geminiPromise, timeoutPromise]);
+
         if (object && object.message) {
           return object;
         }
       } catch (cloudErr) {
-        console.warn("Cloud Gemini unreachable, delegating to Local Architectural Civil Engine:", cloudErr);
+        console.warn("Cloud Gemini fallback to Local Civil Architectural Intelligence Core:", cloudErr);
       }
     }
 

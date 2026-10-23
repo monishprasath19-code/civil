@@ -68,28 +68,28 @@ export default async function ProjectWorkspaceShell({ params }: { params: Promis
   const lastUpdated = project.updatedAt || (project as any).updated_at || new Date().toISOString();
 
   return (
-    <div className="space-y-8 max-w-7xl">
+    <div className="space-y-8 max-w-7xl font-sans">
       {/* Header bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#e7e5df] pb-6">
         <div className="flex items-center gap-4">
           <Link 
             href="/dashboard/projects" 
-            className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-amber-400 hover:border-amber-500/40 transition-colors"
+            className="w-10 h-10 rounded-full bg-white border border-[#d6d3cc] flex items-center justify-center text-[#78716c] hover:text-[#1b3a2b] hover:border-[#1b3a2b] transition-colors shadow-sm"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-amber-400/90 font-medium">
-                Commission Workspace
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#1b3a2b] font-semibold">
+                Project Workspace
               </span>
-              <span className="text-zinc-600">•</span>
-              <span className="text-[10px] font-mono text-zinc-400">ID: {project.id}</span>
+              <span className="text-[#a8a29e]">•</span>
+              <span className="text-[10px] font-mono text-[#78716c]">ID: {project.id}</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-serif tracking-tight text-white mt-0.5">
+            <h1 className="text-2xl sm:text-3xl font-serif tracking-tight text-[#1c1917] mt-0.5 font-normal">
               {project.name}
             </h1>
-            <p className="text-xs text-zinc-400 font-light mt-0.5">
+            <p className="text-xs text-[#78716c] font-light mt-0.5">
               Site: {site.location || "Designated Plot"} • Calibrated {new Date(lastUpdated).toLocaleDateString()}
             </p>
           </div>
@@ -98,10 +98,10 @@ export default async function ProjectWorkspaceShell({ params }: { params: Promis
         <form action={handleDelete}>
           <button 
             type="submit" 
-            className="flex items-center gap-2 px-4 py-2 text-xs font-mono uppercase tracking-wider text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 rounded-xl transition-colors"
+            className="flex items-center gap-2 px-5 py-2 text-xs font-mono uppercase tracking-wider text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-full transition-colors font-medium shadow-sm"
           >
             <Trash2 className="w-3.5 h-3.5" />
-            Decommission Project
+            Delete Project
           </button>
         </form>
       </div>
@@ -111,50 +111,50 @@ export default async function ProjectWorkspaceShell({ params }: { params: Promis
         
         {/* Left Column: Quick Stats & Geometric Health */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-zinc-900/60 backdrop-blur-sm rounded-2xl border border-zinc-800/80 p-5 shadow-xl space-y-4">
-            <h2 className="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-400 font-semibold flex items-center gap-2 border-b border-zinc-800/80 pb-3">
+          <div className="bg-white rounded-3xl border border-[#e7e5df] p-6 shadow-sm space-y-4">
+            <h2 className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#1b3a2b] font-semibold flex items-center gap-2 border-b border-[#f0ede6] pb-3">
               <LayoutDashboard className="w-3.5 h-3.5" /> Site Telemetry
             </h2>
             <div className="space-y-3.5 text-xs">
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">Plot Bounds</span>
-                <span className="font-serif text-sm font-medium text-zinc-100">{site.plotWidth || 0}m × {site.plotLength || 0}m</span>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#78716c] block">Plot Bounds</span>
+                <span className="font-serif text-sm font-medium text-[#1c1917]">{site.plotWidth || 0}m × {site.plotLength || 0}m</span>
               </div>
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">Built-up Surface</span>
-                <span className="font-serif text-sm font-medium text-zinc-100">{builtUpArea.toFixed(1)} sq.m</span>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#78716c] block">Built-up Surface</span>
+                <span className="font-serif text-sm font-medium text-[#1c1917]">{builtUpArea.toFixed(1)} sq.m</span>
               </div>
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">Spatial Structure</span>
-                <span className="font-serif text-sm font-medium text-zinc-100">{floors.length} Levels • {roomCount} Chambers</span>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#78716c] block">Spatial Structure</span>
+                <span className="font-serif text-sm font-medium text-[#1c1917]">{floors.length} Levels • {roomCount} Chambers</span>
               </div>
-              <div className="pt-3 border-t border-zinc-800/70">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">Allocated Budget</span>
-                <span className="font-serif text-sm font-medium text-zinc-100">{formatCurrency(budget)}</span>
+              <div className="pt-3 border-t border-[#f0ede6]">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#78716c] block">Allocated Budget</span>
+                <span className="font-serif text-sm font-medium text-[#1c1917]">{formatCurrency(budget)}</span>
               </div>
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">Calculated BOQ</span>
-                <span className={`font-serif text-sm font-bold ${cost?.grandTotal > budget ? 'text-amber-400' : 'text-emerald-400'}`}>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#78716c] block">Calculated BOQ</span>
+                <span className={`font-serif text-sm font-bold ${cost?.grandTotal > budget ? 'text-amber-700' : 'text-[#1b3a2b]'}`}>
                   {cost ? formatCurrency(cost.grandTotal) : 'Pending generation'}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="bg-zinc-900/60 backdrop-blur-sm rounded-2xl border border-zinc-800/80 p-5 shadow-xl space-y-4">
-            <h2 className="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-400 font-semibold flex items-center gap-2 border-b border-zinc-800/80 pb-3">
-              <Sparkles className="w-3.5 h-3.5" /> Structural Integrity
+          <div className="bg-white rounded-3xl border border-[#e7e5df] p-6 shadow-sm space-y-4">
+            <h2 className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#1b3a2b] font-semibold flex items-center gap-2 border-b border-[#f0ede6] pb-3">
+              <Sparkles className="w-3.5 h-3.5" /> Structural Status
             </h2>
             {warnings.length === 0 ? (
-              <div className="flex items-start gap-2.5 text-xs text-emerald-300 bg-emerald-950/30 p-3 rounded-xl border border-emerald-500/20">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
+              <div className="flex items-start gap-2.5 text-xs text-emerald-800 bg-emerald-50 p-3.5 rounded-2xl border border-emerald-200">
+                <CheckCircle2 className="w-4 h-4 text-emerald-700 mt-0.5 shrink-0" />
                 <p>Architectural geometry and BOQ data are fully validated.</p>
               </div>
             ) : (
               <div className="space-y-2">
                 {warnings.map((w, i) => (
-                  <div key={i} className="flex items-start gap-2 text-xs text-amber-300/90 bg-amber-950/30 p-2.5 rounded-xl border border-amber-500/20">
-                    <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                  <div key={i} className="flex items-start gap-2 text-xs text-amber-800 bg-amber-50 p-3 rounded-2xl border border-amber-200">
+                    <AlertTriangle className="w-4 h-4 text-amber-700 mt-0.5 shrink-0" />
                     <p>{w}</p>
                   </div>
                 ))}
@@ -166,17 +166,17 @@ export default async function ProjectWorkspaceShell({ params }: { params: Promis
         {/* Right Column: Architectural Working Modules */}
         <div className="lg:col-span-3 space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-amber-400 font-medium flex items-center gap-2">
-              <Compass className="w-3.5 h-3.5" />
-              Interactive Architectural Studios
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#1b3a2b] font-semibold flex items-center gap-2">
+              <Compass className="w-3.5 h-3.5 text-[#1b3a2b]" />
+              Interactive Studios
             </span>
-            <span className="text-xs text-zinc-500 font-mono">Realtime WebGL & CAD</span>
+            <span className="text-xs text-[#78716c] font-mono">Realtime WebGL & CAD</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             
             <WorkspaceCard 
-              icon={<Grid2X2 className="w-6 h-6 text-amber-400" />} 
+              icon={<Grid2X2 className="w-6 h-6 text-[#1b3a2b]" />} 
               title="2D CAD Floor Planner" 
               subtitle="Vector CAD Drafting"
               description="Author exterior load-bearing walls, partitions, precision doors, windows, and dynamic spatial zoning." 
@@ -185,7 +185,7 @@ export default async function ProjectWorkspaceShell({ params }: { params: Promis
             />
             
             <WorkspaceCard 
-              icon={<Box className="w-6 h-6 text-amber-400" />} 
+              icon={<Box className="w-6 h-6 text-[#1b3a2b]" />} 
               title="3D Design & Interior Engine" 
               subtitle="Three.js PBR Walkthrough"
               description="Inspect generated building geometry in photoreal WebGL 2.0 with Drei sun simulation and luxury mineral materials." 
@@ -193,7 +193,7 @@ export default async function ProjectWorkspaceShell({ params }: { params: Promis
             />
             
             <WorkspaceCard 
-              icon={<Calculator className="w-6 h-6 text-amber-400" />} 
+              icon={<Calculator className="w-6 h-6 text-[#1b3a2b]" />} 
               title="Deterministic Cost & BOQ" 
               subtitle="Engineering Bill of Quantities"
               description="Review concrete, steel, masonry, finishing schedules, labor cost indices, and export ready CSVs." 
@@ -201,7 +201,7 @@ export default async function ProjectWorkspaceShell({ params }: { params: Promis
             />
             
             <WorkspaceCard 
-              icon={<FileText className="w-6 h-6 text-amber-400" />} 
+              icon={<FileText className="w-6 h-6 text-[#1b3a2b]" />} 
               title="Executive Architectural Dossier" 
               subtitle="Client Specification & PDF"
               description="Compile high-level engineering briefs, site orientation diagrams, and comprehensive financial summaries." 
@@ -231,32 +231,44 @@ function WorkspaceCard({
   primary?: boolean;
 }) {
   return (
-    <div className={`p-6 rounded-2xl border transition-all relative overflow-hidden group shadow-xl ${
+    <div className={`p-7 rounded-3xl border transition-all relative overflow-hidden group shadow-sm hover:shadow-md ${
       primary 
-        ? 'bg-gradient-to-br from-zinc-900/90 via-zinc-900/60 to-zinc-950 border-amber-500/30 hover:border-amber-500/60' 
-        : 'bg-zinc-900/60 border-zinc-800/80 hover:border-amber-500/40 hover:bg-zinc-900/80'
+        ? 'bg-[#14281d] text-white border-transparent' 
+        : 'bg-white border-[#e7e5df] hover:border-[#1b3a2b]'
     }`}>
       {primary && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-400" />
       )}
       
-      <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-zinc-950 border border-zinc-800/80 shadow-md group-hover:border-amber-500/40 group-hover:scale-105 transition-all">
+      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border transition-all ${
+        primary 
+          ? 'bg-white/10 border-white/20 text-white' 
+          : 'bg-[#faf8f5] border-[#e7e5df] text-[#1b3a2b] group-hover:scale-105'
+      }`}>
         {icon}
       </div>
 
-      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-amber-400/80 block mb-1">
+      <span className={`text-[10px] font-mono uppercase tracking-[0.2em] block mb-1 font-semibold ${
+        primary ? 'text-emerald-300' : 'text-[#1b3a2b]'
+      }`}>
         {subtitle}
       </span>
-      <h3 className="text-xl font-serif font-medium text-white group-hover:text-amber-300 transition-colors mb-2">
+      <h3 className={`text-xl font-serif font-normal transition-colors mb-2 ${
+        primary ? 'text-white' : 'text-[#1c1917] group-hover:text-[#1b3a2b]'
+      }`}>
         {title}
       </h3>
-      <p className="text-xs text-zinc-400 leading-relaxed font-light mb-6">
+      <p className={`text-xs leading-relaxed font-light mb-6 ${
+        primary ? 'text-white/80' : 'text-[#78716c]'
+      }`}>
         {description}
       </p>
       
       <Link 
         href={link} 
-        className="inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase font-semibold text-amber-400 group-hover:text-amber-300 transition-colors"
+        className={`inline-flex items-center gap-2 text-xs font-mono tracking-wider uppercase font-semibold transition-colors ${
+          primary ? 'text-white hover:text-emerald-200' : 'text-[#1b3a2b] hover:text-[#14281d]'
+        }`}
       >
         Launch Studio <span aria-hidden="true">&rarr;</span>
       </Link>

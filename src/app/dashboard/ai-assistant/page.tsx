@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Bot, Send, Sparkles, ShieldCheck, Cpu, ArrowLeft, RefreshCw, MessageSquare } from "lucide-react";
+import { Bot, Send, Sparkles, RefreshCw, ArrowLeft, Building2, Compass, Layers, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
 export default function AIAssistantStudioPage() {
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; content: string; time: string }>>([
     {
       role: 'assistant',
-      content: "Salutations. I am your Civil & Architectural AI Agent. I can advise on structural column spans, natural daylight ratios, passive thermal zoning, municipal building bylaws, and deterministic quantity takeoff calculations. How may I assist your architectural atelier today?",
+      content: "Salutations. I am your Civil & Architectural AI Agent.\n\nI can assist with structural column sizing, concrete slab volume calculations, passive cross-ventilation, municipal setbacks & FAR, Vastu spatial orientation, and itemized BOQ estimations. How may I assist your architectural practice today?",
       time: "Just now"
     }
   ]);
@@ -19,7 +19,11 @@ export default function AIAssistantStudioPage() {
     const prompt = textToSend || input;
     if (!prompt.trim() || isLoading) return;
 
-    const userMsg = { role: 'user' as const, content: prompt, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
+    const userMsg = { 
+      role: 'user' as const, 
+      content: prompt, 
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+    };
     setMessages(prev => [...prev, userMsg]);
     setInput("");
     setIsLoading(true);
@@ -60,72 +64,77 @@ export default function AIAssistantStudioPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto h-[calc(100vh-8rem)] flex flex-col pb-6">
+    <div className="max-w-5xl mx-auto h-[calc(100vh-7rem)] flex flex-col pb-4 font-sans">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-amber-500/20 pb-4 mb-4 shrink-0">
+      <div className="flex items-center justify-between border-b border-[#e7e5df] pb-4 mb-4 shrink-0 bg-transparent">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-600 flex items-center justify-center text-black shadow-lg shadow-amber-500/20">
-            <Bot className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-2xl bg-[#1b3a2b] flex items-center justify-center text-white shadow-sm">
+            <Bot className="w-5 h-5 text-white stroke-[2]" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] tracking-[0.25em] text-amber-400 uppercase">CO-PILOTE INTELLIGENT</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="font-mono text-[10px] tracking-[0.2em] text-[#1b3a2b] uppercase font-semibold">
+                AUTONOMOUS CIVIL COPILOT
+              </span>
+              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
             </div>
-            <h1 className="text-xl font-serif text-white">AI Civil Architecture Assistant</h1>
+            <h1 className="text-xl font-serif text-[#1c1917] font-normal tracking-tight">
+              AI Civil Architecture & Structural Studio
+            </h1>
           </div>
         </div>
 
         <Link
           href="/dashboard"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-amber-500/40 text-zinc-300 hover:text-amber-400 text-xs font-mono transition-all"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-[#d6d3cc] hover:bg-[#f5f3ec] text-[#1c1917] text-xs font-mono transition-all shadow-sm"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Dashboard
         </Link>
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto space-y-4 p-4 rounded-2xl bg-zinc-950/90 border border-zinc-800/80 shadow-2xl backdrop-blur-xl">
+      <div className="flex-1 overflow-y-auto space-y-4 p-5 rounded-3xl bg-white border border-[#e7e5df] shadow-sm">
         {messages.map((m, idx) => (
           <div key={idx} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[80%] rounded-2xl p-4 text-sm leading-relaxed ${
+            <div className={`max-w-[85%] rounded-2xl p-5 text-sm leading-relaxed ${
               m.role === 'user' 
-                ? 'bg-amber-500/15 border border-amber-500/40 text-amber-100 rounded-tr-sm font-sans' 
-                : 'bg-zinc-900/90 border border-zinc-800 text-zinc-200 rounded-tl-sm shadow-md font-sans'
+                ? 'bg-[#1b3a2b] text-white rounded-tr-sm font-sans shadow-sm' 
+                : 'bg-[#faf8f5] border border-[#e7e5df] text-[#1c1917] rounded-tl-sm shadow-sm font-sans'
             }`}>
-              <div className="flex items-center justify-between gap-4 mb-1.5 text-[10px] font-mono text-zinc-500">
-                <span className={m.role === 'user' ? 'text-amber-400' : 'text-zinc-400'}>
-                  {m.role === 'user' ? 'ARCHITECT' : 'CIVIL AI AGENT'}
+              <div className="flex items-center justify-between gap-4 mb-2 text-[10px] font-mono">
+                <span className={`font-semibold tracking-wider ${m.role === 'user' ? 'text-emerald-200' : 'text-[#1b3a2b]'}`}>
+                  {m.role === 'user' ? 'LEAD ARCHITECT' : 'CIVIL AI AGENT'}
                 </span>
-                <span>{m.time}</span>
+                <span className={m.role === 'user' ? 'text-white/60' : 'text-[#78716c]'}>{m.time}</span>
               </div>
-              <p className="whitespace-pre-line font-light">{m.content}</p>
+              <p className="whitespace-pre-line font-light leading-relaxed">{m.content}</p>
             </div>
           </div>
         ))}
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="p-3.5 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-zinc-400 text-xs font-mono flex items-center gap-2">
-              <RefreshCw className="w-3.5 h-3.5 animate-spin text-amber-400" />
-              <span>Synthesizing architectural specifications...</span>
+            <div className="p-4 rounded-2xl bg-[#faf8f5] border border-[#e7e5df] text-[#57534e] text-xs font-mono flex items-center gap-2.5 shadow-sm">
+              <RefreshCw className="w-4 h-4 animate-spin text-[#1b3a2b]" />
+              <span>Analyzing structural specifications & building bylaws...</span>
             </div>
           </div>
         )}
       </div>
 
-      {/* Suggested Chips */}
-      <div className="py-2.5 flex flex-wrap gap-1.5 shrink-0">
+      {/* Suggested Prompt Chips */}
+      <div className="py-3 flex flex-wrap gap-2 shrink-0">
         {[
           "What is the standard residential ceiling height?",
           "How to calculate concrete slab volume for a 150 m² floor?",
-          "Explain passive cross-ventilation rules for tropical climates",
-          "What are the typical cost ratios between substructure and finishes?"
+          "Explain column sizing rules for G+1 residential structure",
+          "What are the typical cost ratios between substructure and finishes?",
+          "What are the mandatory setbacks for a residential plot?"
         ].map(prompt => (
           <button
             key={prompt}
             onClick={() => handleSend(prompt)}
-            className="text-[11px] font-mono bg-zinc-900/80 hover:bg-amber-500/10 border border-zinc-800 hover:border-amber-500/40 text-zinc-400 hover:text-amber-300 px-3 py-1.5 rounded-full transition-all"
+            className="text-[11px] font-mono bg-white hover:bg-[#f5f3ec] border border-[#d6d3cc] hover:border-[#1b3a2b] text-[#57534e] hover:text-[#1b3a2b] px-3.5 py-1.5 rounded-full transition-all shadow-sm"
           >
             {prompt}
           </button>
@@ -134,20 +143,20 @@ export default function AIAssistantStudioPage() {
 
       {/* Input */}
       <div className="pt-1 shrink-0">
-        <div className="flex items-center gap-2 bg-zinc-900/90 border border-zinc-800 rounded-2xl p-1.5 pr-2 focus-within:border-amber-500/50 transition-all shadow-xl">
+        <div className="flex items-center gap-2 bg-white border border-[#d6d3cc] rounded-full p-1.5 pr-2 focus-within:border-[#1b3a2b] focus-within:ring-1 focus-within:ring-[#1b3a2b] transition-all shadow-sm">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Ask about structural spans, material properties, or architectural standards..."
-            className="flex-1 bg-transparent border-none text-sm text-zinc-100 placeholder:text-zinc-500 px-3 py-2 focus:outline-none"
+            placeholder="Ask about column spans, slab volume, Vastu orientation, or material takeoff..."
+            className="flex-1 bg-transparent border-none text-sm text-[#1c1917] placeholder:text-[#a8a29e] px-4 py-2.5 focus:outline-none"
             disabled={isLoading}
           />
           <button
             onClick={() => handleSend()}
             disabled={isLoading || !input.trim()}
-            className="p-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold disabled:opacity-40 transition-colors shadow-lg shadow-amber-500/20"
+            className="p-3 rounded-full bg-[#1b3a2b] hover:bg-[#14281d] text-white disabled:opacity-40 transition-colors shadow-sm"
           >
             <Send className="w-4 h-4" />
           </button>

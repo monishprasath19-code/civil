@@ -97,17 +97,17 @@ export default function NewProjectWizard() {
   const plotArea = (parseFloat(plotLength) || 0) * (parseFloat(plotWidth) || 0);
 
   return (
-    <div className="max-w-3xl mx-auto py-6 space-y-8">
+    <div className="max-w-3xl mx-auto py-6 space-y-8 font-sans">
       {/* Header */}
       <div>
-        <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-amber-400/90 font-medium flex items-center gap-2">
-          <Compass className="w-3.5 h-3.5 text-amber-400" />
+        <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#1b3a2b] font-semibold flex items-center gap-2">
+          <Compass className="w-3.5 h-3.5 text-[#1b3a2b]" />
           Atelier Commissioning Intake
         </span>
-        <h1 className="text-3xl font-serif tracking-tight text-white mt-1">
+        <h1 className="text-3xl font-serif tracking-tight text-[#1c1917] mt-1 font-normal">
           Commission Architectural Project
         </h1>
-        <p className="text-sm text-zinc-400 font-light mt-1">
+        <p className="text-sm text-[#78716c] font-light mt-1">
           Establish the foundational site dimensions, financial capital boundaries, and spatial typology.
         </p>
       </div>
@@ -119,12 +119,12 @@ export default function NewProjectWizard() {
             <li key={step.name} className={`relative ${stepIdx !== steps.length - 1 ? 'pr-12 sm:pr-24' : ''}`}>
               <div className="flex items-center">
                 <div 
-                  className={`relative flex h-8 w-8 items-center justify-center rounded-xl text-xs font-mono transition-all ${
+                  className={`relative flex h-8 w-8 items-center justify-center rounded-full text-xs font-mono transition-all ${
                     stepIdx < currentStep 
-                      ? 'bg-amber-500 text-zinc-950 font-bold shadow-lg shadow-amber-500/20' 
+                      ? 'bg-[#1b3a2b] text-white font-bold shadow-sm' 
                       : stepIdx === currentStep 
-                        ? 'border border-amber-400 bg-amber-500/10 text-amber-300 font-bold' 
-                        : 'border border-zinc-800 bg-zinc-900 text-zinc-500'
+                        ? 'border-2 border-[#1b3a2b] bg-white text-[#1b3a2b] font-bold' 
+                        : 'border border-[#d6d3cc] bg-[#faf8f5] text-[#a8a29e]'
                   }`}
                 >
                   {stepIdx < currentStep ? (
@@ -135,13 +135,13 @@ export default function NewProjectWizard() {
                 </div>
                 {stepIdx !== steps.length - 1 && (
                   <div 
-                    className={`absolute top-4 w-full h-[2px] ${stepIdx < currentStep ? 'bg-amber-500/80' : 'bg-zinc-800'}`} 
+                    className={`absolute top-4 w-full h-[2px] ${stepIdx < currentStep ? 'bg-[#1b3a2b]' : 'bg-[#e7e5df]'}`} 
                     style={{ left: '2.5rem', right: '-2.5rem' }} 
                   />
                 )}
               </div>
               <span className={`absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-widest whitespace-nowrap ${
-                stepIdx <= currentStep ? 'text-amber-400' : 'text-zinc-600'
+                stepIdx <= currentStep ? 'text-[#1b3a2b] font-semibold' : 'text-[#a8a29e]'
               }`}>
                 {step.name}
               </span>
@@ -151,64 +151,64 @@ export default function NewProjectWizard() {
       </nav>
 
       {/* Form Container */}
-      <div className="mt-10 bg-zinc-900/60 backdrop-blur-sm rounded-2xl border border-zinc-800/80 p-6 sm:p-8 shadow-2xl">
+      <div className="mt-10 bg-white rounded-3xl border border-[#e7e5df] p-6 sm:p-8 shadow-sm">
         
         {/* Step 1: Site Geometry */}
         {currentStep === 0 && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div className="sm:col-span-2">
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Project Title</label>
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Project Title</label>
                 <input 
                   type="text" 
                   value={projectName} 
                   onChange={e => setProjectName(e.target.value)} 
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors" 
-                  placeholder="e.g. Maison de Verre / Obsidian Villa" 
+                  className="w-full px-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] placeholder-[#a8a29e] focus:outline-none focus:border-[#1b3a2b] transition-colors" 
+                  placeholder="e.g. Modern Cascading Villa / Alabaster Residence" 
                 />
               </div>
               
               <div className="sm:col-span-2">
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Geographic Location</label>
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Geographic Location</label>
                 <input 
                   type="text" 
                   value={location} 
                   onChange={e => setLocation(e.target.value)} 
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors" 
+                  className="w-full px-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] placeholder-[#a8a29e] focus:outline-none focus:border-[#1b3a2b] transition-colors" 
                   placeholder="e.g. Mumbai, Maharashtra" 
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Plot Length</label>
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Plot Length</label>
                 <input 
                   type="number" 
                   min="0" 
                   value={plotLength} 
                   onChange={e => setPlotLength(e.target.value)} 
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-amber-500/60 transition-colors" 
+                  className="w-full px-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] focus:outline-none focus:border-[#1b3a2b] transition-colors" 
                   placeholder="15"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Plot Width</label>
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Plot Width</label>
                 <input 
                   type="number" 
                   min="0" 
                   value={plotWidth} 
                   onChange={e => setPlotWidth(e.target.value)} 
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-amber-500/60 transition-colors" 
+                  className="w-full px-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] focus:outline-none focus:border-[#1b3a2b] transition-colors" 
                   placeholder="12"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Measurement Standard</label>
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Measurement Standard</label>
                 <select 
                   value={unit} 
                   onChange={e => setUnit(e.target.value as "feet" | "meters")} 
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-amber-500/60 transition-colors"
+                  className="w-full px-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] focus:outline-none focus:border-[#1b3a2b] transition-colors"
                 >
                   <option value="meters">Meters (SI International)</option>
                   <option value="feet">Feet (Imperial Standard)</option>
@@ -216,18 +216,18 @@ export default function NewProjectWizard() {
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Computed Plot Surface</label>
-                <div className="px-3.5 py-2.5 bg-zinc-950/40 border border-zinc-800/60 rounded-lg text-sm font-mono text-amber-400">
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Computed Plot Surface</label>
+                <div className="px-4 py-2.5 bg-[#f5f3ec] border border-[#e7e5df] rounded-xl text-sm font-mono text-[#1b3a2b] font-semibold">
                   {plotArea > 0 ? `${plotArea.toFixed(1)} sq.${unit}` : "0.0"}
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Approach Road Cardinal</label>
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Approach Road Cardinal</label>
                 <select 
                   value={roadDirection} 
                   onChange={e => setRoadDirection(e.target.value as "N" | "S" | "E" | "W")} 
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-amber-500/60 transition-colors"
+                  className="w-full px-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] focus:outline-none focus:border-[#1b3a2b] transition-colors"
                 >
                   <option value="N">North (Ideal for diffuse lighting)</option>
                   <option value="E">East (Morning sun orientation)</option>
@@ -237,13 +237,13 @@ export default function NewProjectWizard() {
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Storey Levels</label>
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Storey Levels</label>
                 <input 
                   type="number" 
                   min="1" 
                   value={floors} 
                   onChange={e => setFloors(e.target.value)} 
-                  className="w-full px-3.5 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 focus:outline-none focus:border-amber-500/60 transition-colors" 
+                  className="w-full px-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] focus:outline-none focus:border-[#1b3a2b] transition-colors" 
                 />
               </div>
             </div>
@@ -255,45 +255,45 @@ export default function NewProjectWizard() {
           <div className="space-y-6">
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="sm:col-span-2">
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Total Estimated Capital (INR)</label>
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Total Estimated Capital (INR)</label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-amber-400 font-mono text-sm">₹</span>
+                  <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#1b3a2b] font-mono text-sm font-semibold">₹</span>
                   <input 
                     type="number" 
                     min="0" 
                     value={totalBudget} 
                     onChange={e => setTotalBudget(e.target.value)} 
-                    className="w-full pl-8 pr-4 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors font-mono" 
+                    className="w-full pl-8 pr-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] placeholder-[#a8a29e] focus:outline-none focus:border-[#1b3a2b] transition-colors font-mono" 
                     placeholder="5000000" 
                   />
                 </div>
               </div>
               
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Core Civil Structure Sub-Budget</label>
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Core Civil Structure Sub-Budget</label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500 font-mono text-sm">₹</span>
+                  <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#78716c] font-mono text-sm">₹</span>
                   <input 
                     type="number" 
                     min="0" 
                     value={constructionBudget} 
                     onChange={e => setConstructionBudget(e.target.value)} 
-                    className="w-full pl-8 pr-4 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors font-mono" 
+                    className="w-full pl-8 pr-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] placeholder-[#a8a29e] focus:outline-none focus:border-[#1b3a2b] transition-colors font-mono" 
                     placeholder="3500000" 
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">Interior Millwork Sub-Budget</label>
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-1.5 font-medium">Interior Millwork Sub-Budget</label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500 font-mono text-sm">₹</span>
+                  <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#78716c] font-mono text-sm">₹</span>
                   <input 
                     type="number" 
                     min="0" 
                     value={interiorBudget} 
                     onChange={e => setInteriorBudget(e.target.value)} 
-                    className="w-full pl-8 pr-4 py-2.5 bg-zinc-950/80 border border-zinc-800 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-amber-500/60 transition-colors font-mono" 
+                    className="w-full pl-8 pr-4 py-2.5 bg-[#faf8f5] border border-[#d6d3cc] rounded-xl text-sm text-[#1c1917] placeholder-[#a8a29e] focus:outline-none focus:border-[#1b3a2b] transition-colors font-mono" 
                     placeholder="1500000" 
                   />
                 </div>
@@ -306,16 +306,16 @@ export default function NewProjectWizard() {
         {currentStep === 2 && (
           <div className="space-y-6">
             <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-2">Architectural Typology</label>
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#78716c] mb-2 font-medium">Architectural Typology</label>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                 {(['1BHK', '2BHK', '3BHK', '4BHK', 'Custom'] as const).map((type) => (
                   <button
                     key={type}
                     onClick={() => setBhkType(type)}
-                    className={`px-4 py-3 border rounded-xl text-xs font-mono uppercase tracking-wider transition-all ${
+                    className={`px-4 py-3 border rounded-2xl text-xs font-mono uppercase tracking-wider transition-all ${
                       bhkType === type 
-                        ? 'bg-amber-500/10 border-amber-500/60 text-amber-300 font-bold ring-1 ring-amber-500/20' 
-                        : 'bg-zinc-950/60 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                        ? 'bg-[#1b3a2b] border-[#1b3a2b] text-white font-bold shadow-sm' 
+                        : 'bg-[#faf8f5] border-[#d6d3cc] text-[#57534e] hover:border-[#1b3a2b]'
                     }`}
                   >
                     {type}
@@ -324,8 +324,8 @@ export default function NewProjectWizard() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-zinc-800/80">
-              <h4 className="text-xs font-mono uppercase tracking-widest text-zinc-400 mb-3">
+            <div className="pt-4 border-t border-[#f0ede6]">
+              <h4 className="text-xs font-mono uppercase tracking-widest text-[#78716c] mb-3">
                 Programmatic Spatial Scope ({bhkType})
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -334,14 +334,14 @@ export default function NewProjectWizard() {
                   'Guest Suites', 'Sanitary Ensuites', 'Panoramic Terrace', 'Service Balcony', 
                   'Private Library / Study', 'Pooja Sanctuary', 'Covered Portico'
                 ].map((room) => (
-                  <div key={room} className="flex items-center gap-2 p-2 rounded-lg bg-zinc-950/40 border border-zinc-800/50">
+                  <div key={room} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#faf8f5] border border-[#e7e5df]">
                     <input 
                       id={room} 
                       type="checkbox" 
                       defaultChecked 
-                      className="h-3.5 w-3.5 accent-amber-500 rounded bg-zinc-950 border-zinc-700" 
+                      className="h-4 w-4 accent-[#1b3a2b] rounded border-[#d6d3cc]" 
                     />
-                    <label htmlFor={room} className="text-xs text-zinc-300">{room}</label>
+                    <label htmlFor={room} className="text-xs text-[#1c1917] font-medium">{room}</label>
                   </div>
                 ))}
               </div>
@@ -351,7 +351,7 @@ export default function NewProjectWizard() {
       </div>
 
       {error && (
-        <div className="p-4 bg-rose-950/40 border border-rose-500/30 rounded-xl text-rose-300 text-xs">
+        <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-800 text-xs">
           {error}
         </div>
       )}
@@ -361,10 +361,10 @@ export default function NewProjectWizard() {
         <button
           onClick={handleBack}
           disabled={currentStep === 0 || isPending}
-          className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-mono uppercase tracking-wider rounded-xl transition-all ${
+          className={`flex items-center gap-1.5 px-5 py-2.5 text-xs font-mono uppercase tracking-wider rounded-full transition-all ${
             currentStep === 0 
-              ? 'text-zinc-600 cursor-not-allowed opacity-50' 
-              : 'text-zinc-300 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800'
+              ? 'text-[#a8a29e] cursor-not-allowed opacity-50' 
+              : 'text-[#1c1917] bg-white border border-[#d6d3cc] hover:bg-[#faf8f5]'
           }`}
         >
           <ChevronLeft className="w-4 h-4" />
@@ -373,7 +373,7 @@ export default function NewProjectWizard() {
         <button
           onClick={handleNext}
           disabled={isPending}
-          className="flex items-center gap-2 px-6 py-2.5 text-xs font-mono uppercase tracking-wider font-semibold rounded-xl text-zinc-950 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/20 transition-all disabled:opacity-50"
+          className="flex items-center gap-2 px-7 py-2.5 text-xs font-mono uppercase tracking-wider font-semibold rounded-full text-white bg-[#1b3a2b] hover:bg-[#14281d] shadow-sm transition-all disabled:opacity-50"
         >
           {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
           {currentStep === steps.length - 1 ? (isPending ? 'Commencing Project...' : 'Launch Project Hub') : 'Proceed Next'}
